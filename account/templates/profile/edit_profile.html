@@ -1,0 +1,131 @@
+{% extends "base.html" %}
+
+{% block title %}Edit Profile{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow-lg">
+                <div class="card-header bg-secondary text-white">
+                    <h1 class="text-center">Edit Profile</h1>
+                </div>
+                <div class="card-body">
+                    <form
+            method="post"
+            id="QuestionForm"
+            enctype="multipart/form-data"
+            data-departments-url="{% url 'ajax_load_departments' %}"
+          >
+                        {% csrf_token %}
+
+                        <!-- Personal Information -->
+                        <div class="mb-3" style="padding: 10px;">
+                            <h5>Personal Information</h5>
+                            <div class="form-group p-2">
+                                <label for="{{ form.fullname.id_for_label }}">Full Name:</label>
+                                {{ form.fullname }}
+                            </div>
+
+                            <div class="form-group p-2">
+                                <label for="{{ form.nickname.id_for_label }}">Nickname:</label>
+                                {{ form.nickname }}
+                            </div>
+                        </div>
+
+                        <!-- Contact Information -->
+                        <div class="mb-3" style="padding: 10px;">
+                            <h5>Contact Information</h5>
+                            <div class="form-group p-2">
+                                <label for="{{ form.email.id_for_label }}">Email:</label>
+                                {{ form.email }}
+                            </div>
+
+                            <div class="form-group p-2">
+                                <label for="{{ form.university.id_for_label }}">University:</label>
+                                {{ form.university }}
+                            </div>
+
+                            <!-- Replace this section with the provided code snippet -->
+                            <div class="form-group p-2">
+                                <label for="{{ form.department.id_for_label }}">Department:</label>
+                                <select name="{{ form.department.name }}" id="{{ form.department.id_for_label }}">
+                                    {% for department in form.department.field.queryset %}
+                                        <option value="{{ department.pk }}" data-system="{{ department.system }}">{{ department.name }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <!-- End of replacement -->
+
+                            <div class="form-group">
+                                <label for="{{ form.departmental_batch.id_for_label }}">Departmental Batch:</label>
+                                {{ form.departmental_batch }}
+                            </div>
+                            
+
+                            <div class="form-group p-2">
+                                <label for="{{ form.session.id_for_label }}">Session:</label>
+                                {{ form.session }}
+                            </div>
+
+                            <!-- Show/hide based on department system -->
+                            <div id="year-field" class="form-group" style="display: none;">
+                                <label for="{{ form.year.id_for_label }}">Current Year:</label>
+                                {{ form.year }}
+                            </div>
+
+                            <div id="semester-field" class="form-group" style="display: none;">
+                                <label for="{{ form.semester.id_for_label }}">Current Semester:</label>
+                                {{ form.semester }}
+                            </div>
+                        </div>
+
+                        <!-- Social Media Links -->
+                        <div class="mb-3" style="padding: 10px;">
+                            <h5>Social Media Links</h5>
+                            <div class="form-group p-2">
+                                <label for="{{ form.facebook_id.id_for_label }}">Facebook Id:</label>
+                                {{ form.facebook_id }}
+                            </div>
+
+                            <div class="form-group p-2">
+                                <label for="{{ form.codeforces_id.id_for_label }}">Codeforces Id:</label>
+                                {{ form.codeforces_id }}
+                            </div>
+                        </div>
+
+                        <!-- Profile Image -->
+                        <div class="mb-3" style="padding: 10px;">
+                            <h5>Profile Image</h5>
+                            <div class="form-group p-2">
+                                <label for="{{ form.profile_image.id_for_label }}">Upload Profile Image:</label>
+                                {{ form.profile_image }}
+                            </div>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary">Save Changes</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Add any JavaScript or jQuery if needed for additional functionality
+    document.getElementById('id_department').addEventListener('change', function() {
+        var selectedDepartment = this.value;
+        var departmentSystem = this.options[this.selectedIndex].getAttribute('data-system');
+        if (departmentSystem == 'year') {
+            document.getElementById('year-field').style.display = 'block';
+            document.getElementById('semester-field').style.display = 'none';
+        } else if (departmentSystem == 'semester') {
+            document.getElementById('year-field').style.display = 'none';
+            document.getElementById('semester-field').style.display = 'block';
+        } else {
+            document.getElementById('year-field').style.display = 'none';
+            document.getElementById('semester-field').style.display = 'none';
+        }
+    });
+</script>
+{% endblock %}

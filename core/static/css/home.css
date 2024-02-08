@@ -1,0 +1,68 @@
+.card {
+    border: 1px solid #ccc;
+    padding: 5px;
+    margin: 10px;
+    display: inline-block;
+}
+
+.info {
+    border: 1px solid #ccc;
+    padding: 10px;
+    margin: 5px;
+    display: inline-block;
+    text-align: center;
+}
+
+.divider {
+    height: 1.5px;
+    width: 100%;
+    margin: 10px 0;
+    border: none;
+    border-top: 1px solid #ccc;
+}
+
+/* Scrolling text */
+.scrolling-text-container {
+    overflow: hidden;
+    white-space: nowrap;
+    position: relative;
+    border: 2px solid #ccc; 
+    height: 40px; /* Increased height to accommodate the image and text */
+    width: 70%;
+    margin: 0 auto;
+    text-align: left; /* Align text to the left */
+}
+
+.profile-image img {
+    height: 100%; /* Make the image fill the entire height of its container */
+    border-right: 2px solid #ccc; /* Add a border between the image and text */
+    padding-right: 10px; /* Add padding to separate the image and text */
+    margin-top: 15px;
+}
+
+.profile-image i {
+    font-size: 24px; /* Adjust the font size as needed */
+    color: #555; /* Adjust the color as needed */
+}
+
+
+.scrolling-text {
+    display: inline-block;
+    vertical-align: top; /* Align text to the top */
+    padding-left: 10px; /* Add padding to separate the image and text */
+    animation: scrolling-animation 15s linear infinite;
+    /* animation-delay: 2s; */
+}
+
+
+
+@keyframes scrolling-animation {
+    from {
+        transform: translateX(100%);
+    }
+    to {
+        transform: translateX(-100%);
+    }
+}
+
+

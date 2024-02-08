@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+
+{% block title %}Leaderboard{% endblock %}
+
+{% block content %}
+<h1>Leaderboard</h1>
+
+
+<div class="container">
+
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th scope="col">Rank</th>
+                {% comment %} <th scope="col">Image</th> {% endcomment %}
+                <th scope="col">Name</th>
+                <th scope="col">Department</th>
+                <th scope="col">University</th>
+                <th scope="col">Total Uploads</th>
+                <th scope="col">Questions</th>
+                <th scope="col">Books</th>
+                <th scope="col">Notes</th>
+                <th scope="col">Slides</th>
+            </tr>
+        </thead>
+
+
+
+        <tbody>
+            {% for c in users_with_all_info %}
+            <tr scope="row">
+                {% if c.total_uploads != 0 %}
+                    <td align="center">{{ forloop.counter }}</td>
+                    <td>
+                        {% if c.id %}
+                            {% comment %} <img src="{{ c.image.url }}" alt="" style="max-width: 100px; max-height: 100px;"> {% endcomment %}
+                            <a href="{% url 'view_profile' c.id %}">{{ c.user_fullname }}</a>
+                        {% else %}
+                            No valid ID for {{ c.username }}
+                        {% endif %}
+                    </td>
+                    <td>{{ c.department_name }} 
+                        {% if c.dept_batch != 'N/A' and c.dept_batch != '*st' %}
+                            ({{ c.dept_batch }} Batch)
+                        {% endif %}
+                    </td>
+                    <td>{{ c.university_name }}</td>
+                    <td align="center">{{ c.total_uploads }}</td>
+                    <td align="center">{{ c.num_question_uploads }}</td>
+                    <td align="center">{{ c.num_book_uploads }}</td>
+                    <td align="center">{{ c.num_note_uploads }}</td>
+                    <td align="center">{{ c.num_slide_uploads }}</td>
+                {% endif %}
+                </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+
+
+{% endblock %}

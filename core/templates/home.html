@@ -1,0 +1,269 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Home{% endblock %}
+
+<link rel="stylesheet" type="text/css" href="{% static 'static/css/home.css' %}">
+
+<!-- Include Font Awesome from CDN -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-....." crossorigin="anonymous" />
+
+
+{% block content %}
+
+    {% comment %} <div class="search-bar mt-4 mb-4 mx-5 d-flex justify-content-center align-items-center w-100" style="">
+        <form action="{% url 'my_profile' %}" method="post">
+            {% csrf_token %}
+            <input type="text" name="search" placeholder="Search...">
+            <button type="submit">Search</button>
+        </form>
+    </div> {% endcomment %}
+
+    {% if not context.profile_object.user_type and user.is_authenticated %}
+        <form method="post" action="{% url 'update_user_type' %}">
+            {% csrf_token %}
+            <input type="submit" name="user_type" value="Student">
+            <input type="submit" name="user_type" value="Teacher">
+        </form>
+    {% endif %}
+        
+
+    <div class="container mt-4">
+        <div class="row">
+
+{% comment %} ABOUT {% endcomment %}
+            <div class="col-md-6">
+                <div class="spinner-grow text-secondary" role="status">fdsf</div>
+                
+                <h2>Welcome to Onebyzero Edu!</h2>
+                
+                <p class="lead">A River of Educational Resources</p>
+                
+                <p>Our mission is to provide a digital platform for each department/class in any institution and organize educational resources to reduce hassle, which will be universally accessible to all students.</p>
+            </div>
+
+           
+
+{% comment %}BUTTON{% endcomment %}
+            {% if not user.is_authenticated %}
+                <div>
+                    <a href="{% url 'login' %}" class="btn btn-secondary btn-lg" style="width: 500px; height:50px">Show Resources</a>
+                </div>
+            
+            {% elif user.is_authenticated and context.profile_object.university and context.profile_object.department %}
+                <div>
+                    {% if context.profile_object.department.system == 'year' %}
+                        <a href="{% url 'my_department_y' context.profile_object.university.id context.profile_object.department.id %}" class="btn btn-secondary btn-lg" style="width: 500px; height:50px">Our Resources</a>
+                    {% else %}
+                         <a href="{% url 'my_department_s' context.profile_object.university.id context.profile_object.department.id %}" class="btn btn-secondary btn-lg" style="width: 500px; height:50px">Our Resources</a>
+                    {% endif %}
+                </div>
+
+            {% else %}
+                <div>
+                    <a href="{% url 'my_profile' %}" class="btn btn-secondary btn-lg" style="width: 500px; height:50px">Show Resources</a>
+                </div>
+            
+            {% endif %}
+            
+
+            <hr class = "divider">
+
+{% comment %} IMAGE/BANNER {% endcomment %}
+            {% comment %} <div class="col-md-6">
+                <img src="{% static 'your_image_path.jpg' %}" class="img-fluid" alt="Educational Resources Image">
+            </div> {% endcomment %}
+            
+            
+{% comment %}COUNTER{% endcomment %}
+
+
+{% comment %} <div class="scrolling-text-container">
+    <p>
+        <span class="scrolling-text">{{ uploader_latest_question }} uploaded a question {{ formatted_time }}!</span>
+    </p>
+</div> {% endcomment %}
+
+<div class="scrolling-text-container">
+    <p>
+        {% comment %} <span>
+            <span>Onebyzero Edu - A River of Educational Resources!</sp>
+        </span> {% endcomment %}
+        <span class="scrolling-text">
+
+            <span>
+                <span class="profile-image">
+                    {% if uploader_latest_question.profile.profile_image %}
+                    <img src="{{ MEDIA_URL }}{{ uploader_latest_question.profile.profile_image.url }}" alt="Profile Image">
+                    {% else %}
+                        <i class="fas fa-user-circle"></i>
+                    {% endif %}
+                </span>
+
+                <span style="margin-right: 15px;">
+                {{ uploader_latest_question }} uploaded a question {{ formatted_time_latest_question }}
+                </span>
+            </span>
+
+            <span>
+                <span class="profile-image">
+                    {% if uploader_latest_book.profile.profile_image %}
+                    <img src="{{ MEDIA_URL }}{{ uploader_latest_book.profile.profile_image.url }}" alt="Profile Image">
+                    {% else %}
+                        <i class="fas fa-user-circle"></i>
+                    {% endif %}
+                </span>
+                <span style="margin-right: 15px;">
+                {{ uploader_latest_book }} uploaded a book {{ formatted_time_latest_book }}!
+                </span>
+            </span>
+
+            <span>
+                <span class="profile-image">
+                    {% if uploader_latest_note.profile.profile_image %}
+                    <img src="{{ MEDIA_URL }}{{ uploader_latest_note.profile.profile_image.url }}" alt="Profile Image">
+                    {% else %}
+                        <i class="fas fa-user-circle"></i>
+                    {% endif %}
+                </span>
+                <span style="margin-right: 15px;">
+                {{ uploader_latest_note }} uploaded a note {{ formatted_time_latest_note }}!
+                </span>
+            </span>
+
+            <span>
+                <span class="profile-image">
+                    {% if uploader_latest_lecture.profile.profile_image %}
+                    <img src="{{ MEDIA_URL }}{{ uploader_latest_lecture.profile.profile_image.url }}" alt="Profile Image">
+                    {% else %}
+                        <i class="fas fa-user-circle"></i>
+                    {% endif %}
+                </span>
+                <span style="margin-right: 15px;">
+                {{ uploader_latest_lecture }} uploaded a lecture slide  {{ formatted_time_latest_lecture }}!
+                </span>
+            </span>
+        </span>
+
+
+    </p>
+</div>
+
+
+
+<div class="card">
+    <div class="info">
+        <h4>Total Resources</h4>
+        <p>{{ context.total_resources }}</p>
+    </div>
+    <div class="info">
+        <h4>Total Courses</h4>
+        <p>{{ context.total_courses }}</p>
+    </div>
+    <div class="info">
+        <h4>Total Departments</h4>
+        <p>{{ context.total_departments }}</p>
+    </div>
+    <div class="info">
+        <h4>Total Students</h4>
+        <p>{{ context.total_students }}</p>
+    </div>
+</div>
+
+
+
+{% comment %} ROLLER {% endcomment %}
+  
+
+
+{% comment %} TOP 3 CONTRIBUTORS {% endcomment %}
+
+
+{% comment %} TOP 3 Contributors  {% endcomment %}
+<div>
+    <h1>Top 3 Contributors [last 28 days]</h1>
+    <p>Not completed yet</p>
+</div>
+{% comment %} TOP 3 CONTRIBUTORS {% endcomment %}
+
+
+
+{% comment %} Resource Details {% endcomment %}
+<div>
+    <h1>Resource Details</h1>
+    <p>Not completed yet</p>
+</div>
+{% comment %} Resource Details {% endcomment %}
+
+
+
+{% comment %} Feedbacks {% endcomment %}
+<div>
+    <h1>Feedbacks</h1>
+    <p>Not completed yet</p>
+</div>
+{% comment %} Feedbacks {% endcomment %}
+
+
+
+{% comment %} FAQ {% endcomment %}
+<div>
+    <h1>FAQ</h1>
+    <p>Not completed yet</p>
+</div>
+{% comment %} FAQ {% endcomment %}
+
+
+
+{% comment %} Mobile APP {% endcomment %}
+<div>
+    <h1>Mobile App</h1>
+    <p>Not completed yet</p>
+</div>
+{% comment %} Mobile APP {% endcomment %}
+
+
+{% comment %} Child Initiatives {% endcomment %}
+<div>
+    <h1>Our Child Initiatives</h1>
+    <p>Not completed yet</p>
+</div>
+{% comment %} Child Initiatives {% endcomment %}
+
+
+{% comment %} FOOTER {% endcomment %}
+<div>
+    <h1>Footer</h1>
+    <p>Not completed yet</p>
+</div>
+{% comment %} FOOTER {% endcomment %}
+
+        </div>
+    </div>
+
+
+<link rel="stylesheet" type="text/css" href="{% static 'css/home.css' %}">
+
+
+{% comment %} <script>
+    document.addEventListener("DOMContentLoaded", function() {
+        // Prompt the user with the question and store the response
+        var isStudent = confirm("Are you a student?");
+        
+        // Get the user_type field element
+        var userTypeField = document.getElementById("{{ form.user_type.id_for_label }}");
+        
+        // If the user confirms they are a student, set user_type to "student"
+        // Otherwise, set it to "teacher"
+        if (isStudent) {
+            userTypeField.value = "student";
+        } else {
+            userTypeField.value = "teacher";
+        }
+    });
+</script> {% endcomment %}
+
+
+
+
+{% endblock %}

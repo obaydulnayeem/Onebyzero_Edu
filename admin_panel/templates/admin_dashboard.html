@@ -1,0 +1,9 @@
+{% extends "base_admin.html" %}
+
+{% block title %}Admin Dashboard{% endblock %}
+
+{% block admin_content %}
+    <p>Welcome to the admin panel!</p>
+    <h2>{{admin_info.fullname}}</h2>
+    <h6>Batch Ambassador - {{admin_info.departmental_batch}} Batch</h6>
+{% endblock %}

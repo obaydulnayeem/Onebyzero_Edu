@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block title %}Access Denied{% endblock %}
+
+{% block content %}
+<div>
+    <h1>Access Denied</h1>
+    <p>Sorry, you do not have permission to access this page.</p>
+    
+    <form method="post" action="{% url 'sent_verification_req' %}">
+        {% csrf_token %}
+        <button type="submit">Request for Access</button>
+    </form>
+
+    <br/><br/>
+    <h5>Or, contact with your batch ambassadors:</h5>
+    {% for u in ambassadors %}
+            {% comment %} <img src="{{ u.profile_image.url }}" alt="{{ u.username }}" style="max-width: 100px; max-height: 100px;"> {% endcomment %}
+            <a href="{% url 'view_profile' u.id %}">{{ u.fullname }}</a>
+    {% endfor %}
+
+
+
+</div>
+{% endblock %}

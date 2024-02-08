@@ -1,0 +1,45 @@
+{% extends "base_admin.html" %}
+
+{% block title %}Pending For Verify Users{% endblock %}
+
+{% block admin_content %}
+<h1>Batch Wise Users</h1>
+<div class="table-responsive mx-5 mt-4">
+    <table class="table table-striped mb-4">
+        <thead>
+            <tr>
+                <th>Username</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for u in batch_wise_users %}
+                {% if u.user.profile.is_verified %}
+                <tr>
+                    <td>{{ u.user.username }}</td>
+                    {% comment %} <td>
+                        <span id="userType_{{ user.id }}">{{ user.profile.user_type }}</span>
+                        <div id="editUserType_{{ user.id }}" style="display: none;">
+                            <form action="{% url 'update_user_type' user.id %}" method="post">
+                                {% csrf_token %}
+                                <input type="text" name="user_type" value="{{ user.profile.user_type }}">
+                                <button type="submit">Save</button>
+                            </form>
+                        </div>
+                    </td> {% endcomment %}
+                    <td>
+                        {% comment %} <button onclick="toggleEditUserType({{ user.id }})">Edit</button> {% endcomment %}
+                        {% comment %} <a href="{% url 'update_user_type' user.id %}">Edit</a> {% endcomment %}
+                        <form method="post" action="{% url 'make_not_verified_user' u.user.id %}">
+                            {% csrf_token %}
+                            <button type="submit">Make Not Verified User</button>
+                        </form>
+                    </td> 
+                </tr>
+                {% endif %}
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+{% endblock %}
