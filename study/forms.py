@@ -24,7 +24,7 @@ class QuestionForm(forms.ModelForm):
         
         self.fields['department'].queryset = Department.objects.none()
         self.fields['course'].queryset = Course.objects.none()
-        self.fields['course_teacher'].queryset = Teacher.objects.none()
+        self.fields['course_teacher'].queryset = Teacher.objects.all()
 
         if all(field in self.data for field in ['university', 'department', 'year', 'semester']):
             try:

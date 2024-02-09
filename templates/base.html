@@ -24,128 +24,91 @@
 </head>
 
 <body>
+
     <header id="main-header">
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
             <div class="container-fluid">
-                <a class="navbar-brand" href="{% url 'home' %}">Onebyzero Edu</a>
+                <!-- Onebyzero Edu logo -->
+                {% comment %} <a class="navbar-brand" href="{% url 'home' %}">Onebyzero Edu</a> {% endcomment %}
+
+                <a class="navbar-brand" href="{% url 'home' %}">
+                    <img src="{% static 'navbar-logo_onebyzero.png' %}" alt="Onebyzero Edu Logo" width="170" height="40">
+                </a>
+
+                <!-- Toggle button for collapsed navbar on smaller screens -->
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
                     aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-        
-               
-               
+    
+                <!-- Collapsible navbar items -->
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        
-                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                        
+    
+                    <!-- Navbar items aligned to the left -->
+                    <ul class="navbar-nav me-auto">
+
+                    </ul>
+    
+                    <!-- Navbar items aligned to the right -->
+                    <ul class="navbar-nav ms-auto">
                         {% if user.is_authenticated %}
                             <li class="nav-item">
                                 <a class="nav-link active" aria-current="page" href="{% url 'home' %}">Home</a>
                             </li>
-                        {% endif %}
-
-                        {% comment %} <div style="color: white">
-                            {{user.profile.university.id}}
-                            {{user.profile.department.id}}
-                        </div> {% endcomment %}
-
-                        {% if not user.is_authenticated %}
-                            <li class="nav-item">
-                                <a class="nav-link active" href="{% url 'login' %}">Login</a>
-                            </li>
-
-                            {% comment %} <li class="nav-item">
-                                <a class="nav-link" href="{% url 'signup' %}">Signup</a>
-                            </li> {% endcomment %}
-                        {% endif %}
-                            
-                        
-
-                        {% if user.profile.university and user.profile.department %}
-                            {% if user.profile.department.system == 'year' %}
-                                <li class="nav-item">
-                                    <a class="nav-link active" aria-current="page" href="{% url 'my_department_y' user.profile.university.id user.profile.department.id %}">Resources</a>
-                                </li>
-                            {% else %}
-                                <li class="nav-item">
-                                    <a class="nav-link active" aria-current="page" href="{% url 'my_department_s' user.profile.university.id user.profile.department.id %}">Resources</a>
-                                </li>
-                            {% endif %}
-                        {% comment %} {% elif user.profile.university and user.profile.department and user.profile.year and user.profile.semester %}
-
-                        {% else %} {% endcomment %}
-
-                        {% endif %}
-
-
-                        {% comment %} {% if user.profile.department and user.profile.year and user.profile.semester and user.profile.is_verified %}
-
-                            <li class="nav-item dropdown">
-                                <a class="nav-link active dropdown-toggle" href="{% url 'my_resources' user.profile.department.id user.profile.year user.profile.semester %}" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                    Resources
-                                </a>
-                                <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                    <li>
-                                        <a class="dropdown-item" href="{% url 'my_resources' user.profile.department.id user.profile.year user.profile.semester %}">My Semester</a>
+                            {% if user.profile.university and user.profile.department %}
+                                {% if user.profile.department.system == 'year' %}
+                                    <li class="nav-item">
+                                        <a class="nav-link active" aria-current="page" href="{% url 'my_department_y' user.profile.university.id user.profile.department.id %}">Resources</a>
                                     </li>
-                                    <li>
-                                        <a class="dropdown-item" href="{% url 'my_department' 1 1 %}">All Semesters</a>
+                                {% else %}
+                                    <li class="nav-item">
+                                        <a class="nav-link active" aria-current="page" href="{% url 'my_department_s' user.profile.university.id user.profile.department.id %}">Resources</a>
                                     </li>
-                                </ul>
-                            </li>
-
-                        {% else %}
-                            <li class="nav-item">
-                                <a class="nav-link active" aria-current="page" href="{% url 'my_department' user.profile.university.id user.profile.department.id %}">Resources</a>
-                            </li>
-                        {% endif %} {% endcomment %}
-
-                            <li class="nav-item dropdown">
-                                
-                                {% if user.profile.is_verified == True %}
-                                <a class="nav-link active dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                    Contribute
-                                </a>
                                 {% endif %}
-                                
-                                
-                                <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                    <li><a class="dropdown-item" href="{% url 'add_question' %}">Question</a></li>
-                                    <li><a class="dropdown-item" href="{% url 'add_book' %}">Book</a></li>
-                                    {% comment %} <li><hr class="dropdown-divider"></li> {% endcomment %}
-                                    <li><a class="dropdown-item" href="{% url 'add_lecture' %}">Lecture Slide</a></li>
-                                    <li><a class="dropdown-item" href="{% url 'add_note' %}">Note</a></li>
-                                    {% comment %} <li><a class a class="dropdown-item" href="#">Another</a></li> {% endcomment %}
-                                </ul>
-                            </li>
-
-                            {% if user.is_authenticated %}
-                                <li class="nav-item">
-                                    <a class="nav-link active" href="{% url 'leaderboard' %}">Leaderboard</a>
-                                </li>
                             {% endif %}
-                            
-                            {% if user.is_authenticated %}
-                                <li class="nav-item">
-                                    <a class="nav-link active" href="{% url 'my_profile' %}">Profile</a>
-                                </li>
-                            {% endif %}
+                        {% endif %}
 
-                            <li class="nav-item">
-                                <a class="nav-link active" href="{% url 'admin_dashboard' %}">Admin</a>
-                            </li>
 
                         {% if user.is_authenticated %}
                             <li class="nav-item">
-                                <a class="nav-link active" href="{% url 'logout' %}">Logout</a>
+                                <a class="nav-link active" href="{% url 'leaderboard' %}">Leaderboard</a>
                             </li>
+                            <li class="nav-item">
+                                <a class="nav-link active" href="{% url 'admin_dashboard' %}">Admin</a>
+                            </li>
+                            <li class="nav-item dropdown">
+                                <div class="dropdown">
+                                    <a class="nav-link active dropdown-toggle" href="#" id="profileDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                        {% if user.profile.profile_image %}
+                                            <img src="{{ user.profile.profile_image.url }}" alt="Profile Image" class="profile-image rounded-circle" style="width: 30px; height: 30px;">
+                                        {% else %}
+                                            <i class="fas fa-user-circle"></i> <!-- Or any other FontAwesome user icon -->
+                                        {% endif %}
+                                    </a>
+                                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="profileDropdown">
+                                        <li><a class="dropdown-item" href="{% url 'my_profile' %}">Profile</a></li>
+                                        <li><hr class="dropdown-divider"></li>
+                                        <li><a class="dropdown-item" href="{% url 'logout' %}">Logout</a></li>
+                                    </ul>
+                                </div>
+                            </li>
+                        {% else %}
+                            <li class="nav-item">
+                                <a class="nav-link active" href="{% url 'login' %}">Login</a>
+                            </li>
+                            {% comment %} <li class="nav-item">
+                                <a class="nav-link" href="{% url 'signup' %}">Signup</a>
+                            </li> {% endcomment %}
                         {% endif %}
                     </ul>
                 </div>
             </div>
         </nav>
     </header>
+    
+
+
+    
 
     <main>
         {% block content %}
