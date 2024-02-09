@@ -14,10 +14,22 @@ YEAR_CHOICES = (
 # SEMESTER -------------------------------------------------
 FIRST_SEM = 1
 SECOND_SEM = 2
+THIRD_SEM = 3
+FOURTH_SEM = 4
+FIFTH_SEM = 5
+SIXTH_SEM = 6
+SEVENTH_SEM = 7
+EIGHTH_SEM = 8 
 
 SEMESTER_CHOICES = (
     (FIRST_SEM, '1st Semester'),
     (SECOND_SEM, '2nd Semester'),
+    (THIRD_SEM, '3rd Semester'),
+    (FOURTH_SEM, '4th Semester'),
+    (FIFTH_SEM, '5th Semester'),
+    (SIXTH_SEM, '6th Semester'),
+    (SEVENTH_SEM, '7th Semester'),
+    (EIGHTH_SEM, '8th Semester'),
 )
 
 # EXAM NAME-------------------------------------------------

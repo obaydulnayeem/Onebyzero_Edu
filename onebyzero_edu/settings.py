@@ -77,7 +77,11 @@ TEMPLATES = [
                 
                 'study.context_processors.view_profile_context_processors.view_profile_contributions',
 
-                'study.context_processors.department_context_processors.department_context_view',
+                'study.context_processors.department_y_context_processors.department_y_context_view',
+                
+                'study.context_processors.department_s_context_processors.department_s_context_view',
+                
+                # 'study.context_processors.department_context_processors.department_context_view',
 
                 # 'study.context_processors.recent_uploads.recent_uploads_view',
                 

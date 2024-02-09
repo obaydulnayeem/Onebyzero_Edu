@@ -14,6 +14,7 @@
   <div class="container mt-4 mb-4">
       <div class="text-center mt-3">
         <h2>Department of {{ department.name }}</h2>
+        <p>(Faculty of {{ department.faculty }})</p>
         <h4>{{ university.name }}</h4>
       </div>
 
@@ -21,263 +22,521 @@
         <a href="{% url 'switch_department' %}">Switch Department</a>
       </div> {% endcomment %}
 
-      <br>
+<br/>
 
       <table class="table table-bordered table-striped">
         <thead>
           <tr>
-            <th scope="col"></th>
-            <th scope="col">Total Courses</th>
-            <th scope="col">Total Credits</th>
-            <th scope="col">Total Hours</th>
+            <th scope="col" style="text-align: center;">Semester</th>
+            <th style="text-align: center;">Total Courses</th>
+            <th style="text-align: center;">Total Credits</th>
+            <th style="text-align: center;">Total Hours</th>
           </tr>
         </thead>
+
         <tbody>
             <tr>
               <th scope="row">1st Sem</th>
-              <td>{{courses_sem1}}</td>
-              <td>{{credits_sem1}}</td>
-              <td>{{hours_sem1}}</td>
+              <td align="center">{{courses_sem1}}</td>
+              <td align="center">{{credits_sem1|floatformat:"2"}}</td>
+              <td align="center">{{hours_sem1}}</td>
             </tr>
 
             <tr>
               <th scope="row">2nd Sem</th>
-              <td>{{courses_sem2}}</td>
-              <td>{{credits_sem2}}</td>
-              <td>{{hours_sem2}}</td>
+              <td align="center">{{courses_sem2}}</td>
+              <td align="center">{{credits_sem2|floatformat:"2"}}</td>
+              <td align="center">{{hours_sem2}}</td>
             </tr>
 
             <tr>
               <th scope="row">3rd Sem</th>
-              <td>{{courses_sem3}}</td>
-              <td>{{credits_sem3}}</td>
-              <td>{{hours_sem3}}</td>
+              <td align="center">{{courses_sem3}}</td>
+              <td align="center">{{credits_sem3|floatformat:"2"}}</td>
+              <td align="center">{{hours_sem3}}</td>
             </tr>
 
             <tr>
               <th scope="row">4th Sem</th>
-              <td>{{courses_sem4}}</td>
-              <td>{{credits_sem4}}</td>
-              <td>{{hours_sem4}}</td>
+              <td align="center">{{courses_sem4}}</td>
+              <td align="center">{{credits_sem4|floatformat:"2"}}</td>
+              <td align="center">{{hours_sem4}}</td>
             </tr>
 
             <tr>
               <th scope="row">5th Sem</th>
-              <td>{{courses_sem5}}</td>
-              <td>{{credits_sem5}}</td>
-              <td>{{hours_sem5}}</td>
+              <td align="center">{{courses_sem5}}</td>
+              <td align="center">{{credits_sem5|floatformat:"2"}}</td>
+              <td align="center">{{hours_sem5}}</td>
             </tr>
 
             <tr>
               <th scope="row">6th Sem</th>
-              <td>{{courses_sem6}}</td>
-              <td>{{credits_sem6}}</td>
-              <td>{{hours_sem6}}</td>
+              <td align="center">{{courses_sem6}}</td>
+              <td align="center">{{credits_sem6|floatformat:"2"}}</td>
+              <td align="center">{{hours_sem6}}</td>
             </tr>
 
             <tr>
               <th scope="row">7th Sem</th>
-              <td>{{courses_sem7}}</td>
-              <td>{{credits_sem7}}</td>
-              <td>{{hours_sem7}}</td>
+              <td align="center">{{courses_sem7}}</td>
+              <td align="center">{{credits_sem7|floatformat:"2"}}</td>
+              <td align="center">{{hours_sem7}}</td>
             </tr>
 
             <tr>
               <th scope="row">8th Sem</th>
-              <td>{{courses_sem8}}</td>
-              <td>{{credits_sem8}}</td>
-              <td>{{hours_sem8}}</td>
+              <td align="center">{{courses_sem8}}</td>
+              <td align="center">{{credits_sem8|floatformat:"2"}}</td>
+              <td align="center">{{hours_sem8}}</td>
             </tr>
+
 
             <tr>
-              <th scope="row">Total</th>
-              <td>0</td>
-              <td>0</td>
-              <td>0</td>
+              <th scope="row" style="text-align: center;">Total</th>
+              <td align="center"><strong>{{total_courses_s}}</strong></td>
+              <td align="center"><strong>{{total_credits_s|floatformat:"2"}}</strong></td>
+              <td align="center"><strong>{{total_hours_s}}</strong></td>
             </tr>
         </tbody>
       </table>
 
+
+
+    <div>
       <div>
-        {% for i in "1234" %}
-        <hr>
-          {% comment %} <h4 style="font-weight: bold; text-align: center" class="mt-4">Year-{{ i }}, Semester-{{ 1 }}</h4> {% endcomment %}
+        <h4 style="font-weight: bold; text-align: center" class="mt-4">1st Semester</h4>
 
-          {% if i == "1" %}
-            <h4 style="font-weight: bold; text-align: center" class="mt-4">1st Semester</h4>
-            
-            <button type="button" class="btn btn-secondary btn-sm" onclick="pinYearAndSemester({{ i }}, {{ 1 }})">Pin this as current semester</button>
-
-            
-          {% elif i == "2" %}
-            <h4 style="font-weight: bold; text-align: center" class="mt-4">3rd Semester</h4>
-            
-            <button type="button" class="btn btn-secondary btn-sm" onclick="pinYearAndSemester({{ i }}, {{ 1 }})">Pin this as current semester</button>
-
-          {% elif i == "3" %}
-            <h4 style="font-weight: bold; text-align: center" class="mt-4">5th Semester</h4>
-            
-            <button type="button" class="btn btn-secondary btn-sm" onclick="pinYearAndSemester({{ i }}, {{ 1 }})">Pin this as current semester</button>
-
-          {% elif i == "4" %}
-            <h4 style="font-weight: bold; text-align: center" class="mt-4">7th Semester</h4>
-
-            <button type="button" class="btn btn-secondary btn-sm" onclick="pinYearAndSemester({{ i }}, {{ 1 }})">Pin this as current semester</button>
-          {% endif %}
+          <div style="width:50%; margin: 0 auto;">
+            <table class="table table-bordered">
+              <thead>
+                <tr>
+                  <th scope="col" style="text-align: center;">Total Courses</th>
+                  <th scope="col" style="text-align: center;">Total Credits</th>
+                  <th scope="col" style="text-align: center;">Total Hours</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td scope="row" align="center">{{courses_sem1}}</td>
+                  <td align="center">{{credits_sem1}}</td>
+                  <td align="center">{{hours_sem1}}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
       </div>
       
-      <div style="width:50%; margin: 0 auto;">
-          <table class="table table-bordered">
-            <thead>
-              <tr>
-                <th scope="col">Total Courses</th>
-                <th scope="col">Total Credits</th>
-                <th scope="col">Total Hours</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                {% if i == "1" %}
-                <td scope="row">{{ courses_sem1 }}</td>
-                <td>{{ credits_sem1 }}</td>
-                <td>{{ hours_sem1 }}</td>
-                
-                {% elif i == "2" %}
-                <td scope="row">{{ courses_sem3 }}</td>
-                <td>{{ credits_sem3 }}</td>
-                <td>{{ hours_sem3 }}</td>
+          <div>
+            <table class="table table-striped">
+              <thead>
+                <tr>
+                  <th scope="col" style="text-align: center;">#</th>
+                  <th scope="col" style="text-align: center;">Course Title</th>
+                  <th scope="col" style="text-align: center;">Course Code</th>
+                  <th scope="col" style="text-align: center;">Credit</th>
+                  <th scope="col" style="text-align: center;">Hour</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for c in courses %}
+                  {% if c.semester == 1 %}
+                    <tr>
+                      <th scope="row" align="center">{{forloop.counter}}</th>
+                      <td><a href="#">{{c}}</a></td>
+                      <td align="center">{{c.code}}</td>
+                      <td align="center">{{c.credit}}</td>
+                      <td align="center">{{c.hour}}</td>
+                    </tr>
+                  {% endif %}
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+    </div>
 
-                {% elif i == "3" %}
-                <td scope="row">{{ courses_sem5 }}</td>
-                <td>{{ credits_sem5 }}</td>
-                <td>{{ hours_sem5 }}</td>
+    <hr>
 
-                {% elif i == "4" %}
-                <td scope="row">{{ courses_sem7 }}</td>
-                <td>{{ credits_sem7 }}</td>
-                <td>{{ hours_sem7 }}</td>
-                {% endif %}
-
-              </tr>
-            </tbody>
-          </table>
-      </div>
-      
-      <table class="table table-striped">
-        <thead>
-          <tr>
-            <th scope="col">#</th>
-            <th scope="col">Course Title</th>
-            <th scope="col">Course Code</th>
-            <th scope="col">Credit</th>
-            <th scope="col">Hour</th>
-          </tr>
-        </thead>
-        <tbody>
-          {% for course in courses %}
-            {% if course.year == i|add:0 and course.semester == 1 %}
-              <tr>
-                <th scope="row">0</th>
-                <td><a href="{% url 'view_course' course.id %}">{{ course.title }}</a></td>
-                <td>{{ course.code }}</td>
-                <td>{{ course.credit }}</td>
-                <td>{{ course.hour }}</td>
-              </tr>
-            {% endif %}
-          {% endfor %}
-        </tbody>
-      </table>
-      <br>
-
-      {% comment %} <h4 style="font-weight: bold; text-align: center" class="mt-4">Year-{{ i }}, Semester-{{ 2 }}</h4> {% endcomment %}
-
+    <div>
       <div>
-        {% if i == "1" %}
         <h4 style="font-weight: bold; text-align: center" class="mt-4">2nd Semester</h4>
 
-          <button type="button" class="btn btn-secondary btn-sm" onclick="pinYearAndSemester({{ i }}, {{ 2 }})">Pin this as current semester</button>
-
-        {% elif i == "2" %}
-          <h4 style="font-weight: bold; text-align: center"     class="mt-4">4th Semester</h4>
-          
-          <button type="button" class="btn btn-secondary btn-sm" onclick="pinYearAndSemester({{ i }}, {{ 2 }})">Pin this as current semester</button>
-
-        {% elif i == "3" %}
-          <h4 style="font-weight: bold; text-align: center" class="mt-4">6th Semester</h4>
-        
-          <button type="button" class="btn btn-secondary btn-sm" onclick="pinYearAndSemester({{ i }}, {{ 2 }})">Pin this as current semester</button>
-
-        {% elif i == "4" %}
-          <h4 style="font-weight: bold; text-align: center" class="mt-4">8th Semester</h4>
-
-          <button type="button" class="btn btn-secondary btn-sm" onclick="pinYearAndSemester({{ i }}, {{ 2 }})">Pin this as current semester</button>
-
-        {% endif %}
+          <div style="width:50%; margin: 0 auto;">
+            <table class="table table-bordered">
+              <thead>
+                <tr>
+                  <th scope="col" style="text-align: center;">Total Courses</th>
+                  <th scope="col" style="text-align: center;">Total Credits</th>
+                  <th scope="col" style="text-align: center;">Total Hours</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td scope="row" align="center">{{courses_sem2}}</td>
+                  <td align="center">{{credits_sem2}}</td>
+                  <td align="center">{{hours_sem2}}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
       </div>
+      
+          <div>
+            <table class="table table-striped">
+              <thead>
+                <tr>
+                  <th scope="col" style="text-align: center;">#</th>
+                  <th scope="col" style="text-align: center;">Course Title</th>
+                  <th scope="col" style="text-align: center;">Course Code</th>
+                  <th scope="col" style="text-align: center;">Credit</th>
+                  <th scope="col" style="text-align: center;">Hour</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for c in courses %}
+                  {% if c.semester == 2 %}
+                    <tr>
+                      <th scope="row" align="center">{{forloop.counter}}</th>
+                      <td><a href="#">{{c}}</a></td>
+                      <td align="center">{{c.code}}</td>
+                      <td align="center">{{c.credit}}</td>
+                      <td align="center">{{c.hour}}</td>
+                    </tr>
+                  {% endif %}
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+    </div>
 
-      <div style="width:50%; margin: 0 auto;">
-        <table class="table table-bordered">
-          <thead>
-            <tr>
-              <th scope="col">Total Courses</th>
-              <th scope="col">Total Credits</th>
-              <th scope="col">Total Hours</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
+    <hr>
 
-              {% if i == "1" %}
-              <td scope="row">{{ courses_sem2 }}</td>
-              <td>{{ credits_sem2 }}</td>
-              <td>{{ hours_sem2 }}</td>
-              
-              {% elif i == "2" %}
-              <td scope="row">{{ courses_sem4 }}</td>
-              <td>{{ credits_sem4 }}</td>
-              <td>{{ hours_sem4 }}</td>
+    <div>
+      <div>
+        <h4 style="font-weight: bold; text-align: center" class="mt-4">3rd Semester</h4>
 
-              {% elif i == "3" %}
-              <td scope="row">{{ courses_sem6 }}</td>
-              <td>{{ credits_sem6 }}</td>
-              <td>{{ hours_sem6 }}</td>
-
-              {% elif i == "4" %}
-              <td scope="row">{{ courses_sem8 }}</td>
-              <td>{{ credits_sem8 }}</td>
-              <td>{{ hours_sem8 }}</td>
-              {% endif %}
-
-            </tr>
-          </tbody>
-        </table>
+          <div style="width:50%; margin: 0 auto;">
+            <table class="table table-bordered">
+              <thead>
+                <tr>
+                  <th scope="col" style="text-align: center;">Total Courses</th>
+                  <th scope="col" style="text-align: center;">Total Credits</th>
+                  <th scope="col" style="text-align: center;">Total Hours</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td scope="row" align="center">{{courses_sem3}}</td>
+                  <td align="center">{{credits_sem3}}</td>
+                  <td align="center">{{hours_sem3}}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
       </div>
+      
+          <div>
+            <table class="table table-striped">
+              <thead>
+                <tr>
+                  <th scope="col" style="text-align: center;">#</th>
+                  <th scope="col" style="text-align: center;">Course Title</th>
+                  <th scope="col" style="text-align: center;">Course Code</th>
+                  <th scope="col" style="text-align: center;">Credit</th>
+                  <th scope="col" style="text-align: center;">Hour</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for c in courses %}
+                  {% if c.semester == 3 %}
+                    <tr>
+                      <th scope="row" align="center">{{forloop.counter}}</th>
+                      <td><a href="#">{{c}}</a></td>
+                      <td align="center">{{c.code}}</td>
+                      <td align="center">{{c.credit}}</td>
+                      <td align="center">{{c.hour}}</td>
+                    </tr>
+                  {% endif %}
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+    </div>
 
-      <table class="table table-striped">
-        <thead>
-          <tr>
-            <th scope="col">#</th>
-            <th scope="col">Course Title</th>
-            <th scope="col">Course Code</th>
-            <th scope="col">Credit Hour</th>
-          </tr>
-        </thead>
-        <tbody>
-          {% for course in courses %}
-            {% if course.year == i|add:0 and course.semester == 2 %}
-              <tr>
-                <th scope="row">0</th>
-                <td><a href="{% url 'view_course' course.id %}">{{ course.title }}</a></td>
-                <td>{{ course.code }}</td>
-                <td>{{ course.credit }}</td>
-              </tr>
-            {% endif %}
-          {% endfor %}
-        </tbody>
-      </table>
-      <br>
-    {% endfor %}
-  </div>
+    <hr>
+
+
+    <div>
+      <div>
+        <h4 style="font-weight: bold; text-align: center" class="mt-4">4th Semester</h4>
+
+          <div style="width:50%; margin: 0 auto;">
+            <table class="table table-bordered">
+              <thead>
+                <tr>
+                  <th scope="col" style="text-align: center;">Total Courses</th>
+                  <th scope="col" style="text-align: center;">Total Credits</th>
+                  <th scope="col" style="text-align: center;">Total Hours</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td scope="row" align="center">{{courses_sem4}}</td>
+                  <td align="center">{{credits_sem4}}</td>
+                  <td align="center">{{hours_sem4}}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+      </div>
+      
+          <div>
+            <table class="table table-striped">
+              <thead>
+                <tr>
+                  <th scope="col" style="text-align: center;">#</th>
+                  <th scope="col" style="text-align: center;">Course Title</th>
+                  <th scope="col" style="text-align: center;">Course Code</th>
+                  <th scope="col" style="text-align: center;">Credit</th>
+                  <th scope="col" style="text-align: center;">Hour</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for c in courses %}
+                  {% if c.semester == 4 %}
+                    <tr>
+                      <th scope="row" align="center">{{forloop.counter}}</th>
+                      <td><a href="#">{{c}}</a></td>
+                      <td align="center">{{c.code}}</td>
+                      <td align="center">{{c.credit}}</td>
+                      <td align="center">{{c.hour}}</td>
+                    </tr>
+                  {% endif %}
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+    </div>
+
+    <hr>
+
+    <div>
+      <div>
+        <h4 style="font-weight: bold; text-align: center" class="mt-4">5th Semester</h4>
+
+          <div style="width:50%; margin: 0 auto;">
+            <table class="table table-bordered">
+              <thead>
+                <tr>
+                  <th scope="col" style="text-align: center;">Total Courses</th>
+                  <th scope="col" style="text-align: center;">Total Credits</th>
+                  <th scope="col" style="text-align: center;">Total Hours</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td scope="row" align="center">{{courses_sem5}}</td>
+                  <td align="center">{{credits_sem5}}</td>
+                  <td align="center">{{hours_sem5}}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+      </div>
+      
+          <div>
+            <table class="table table-striped">
+              <thead>
+                <tr>
+                  <th scope="col" style="text-align: center;">#</th>
+                  <th scope="col" style="text-align: center;">Course Title</th>
+                  <th scope="col" style="text-align: center;">Course Code</th>
+                  <th scope="col" style="text-align: center;">Credit</th>
+                  <th scope="col" style="text-align: center;">Hour</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for c in courses %}
+                  {% if c.semester == 5 %}
+                    <tr>
+                      <th scope="row" align="center">{{forloop.counter}}</th>
+                      <td><a href="#">{{c}}</a></td>
+                      <td align="center">{{c.code}}</td>
+                      <td align="center">{{c.credit}}</td>
+                      <td align="center">{{c.hour}}</td>
+                    </tr>
+                  {% endif %}
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+    </div>
+
+    <hr>
+
+    <div>
+      <div>
+        <h4 style="font-weight: bold; text-align: center" class="mt-4">6th Semester</h4>
+
+          <div style="width:50%; margin: 0 auto;">
+            <table class="table table-bordered">
+              <thead>
+                <tr>
+                  <th scope="col" style="text-align: center;">Total Courses</th>
+                  <th scope="col" style="text-align: center;">Total Credits</th>
+                  <th scope="col" style="text-align: center;">Total Hours</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td scope="row" align="center">{{courses_sem6}}</td>
+                  <td align="center">{{credits_sem6}}</td>
+                  <td align="center">{{hours_sem6}}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+      </div>
+      
+          <div>
+            <table class="table table-striped">
+              <thead>
+                <tr>
+                  <th scope="col" style="text-align: center;">#</th>
+                  <th scope="col" style="text-align: center;">Course Title</th>
+                  <th scope="col" style="text-align: center;">Course Code</th>
+                  <th scope="col" style="text-align: center;">Credit</th>
+                  <th scope="col" style="text-align: center;">Hour</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for c in courses %}
+                  {% if c.semester == 6 %}
+                    <tr>
+                      <th scope="row" align="center">{{forloop.counter}}</th>
+                      <td><a href="#">{{c}}</a></td>
+                      <td align="center">{{c.code}}</td>
+                      <td align="center">{{c.credit}}</td>
+                      <td align="center">{{c.hour}}</td>
+                    </tr>
+                  {% endif %}
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+    </div>
+
+    <hr>
+
+    <div>
+      <div>
+        <h4 style="font-weight: bold; text-align: center" class="mt-4">7th Semester</h4>
+
+          <div style="width:50%; margin: 0 auto;">
+            <table class="table table-bordered">
+              <thead>
+                <tr>
+                  <th scope="col" style="text-align: center;">Total Courses</th>
+                  <th scope="col" style="text-align: center;">Total Credits</th>
+                  <th scope="col" style="text-align: center;">Total Hours</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td scope="row" align="center">{{courses_sem7}}</td>
+                  <td align="center">{{credits_sem7}}</td>
+                  <td align="center">{{hours_sem7}}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+      </div>
+      
+          <div>
+            <table class="table table-striped">
+              <thead>
+                <tr>
+                  <th scope="col" style="text-align: center;">#</th>
+                  <th scope="col" style="text-align: center;">Course Title</th>
+                  <th scope="col" style="text-align: center;">Course Code</th>
+                  <th scope="col" style="text-align: center;">Credit</th>
+                  <th scope="col" style="text-align: center;">Hour</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for c in courses %}
+                  {% if c.semester == 7 %}
+                    <tr>
+                      <th scope="row" align="center">{{forloop.counter}}</th>
+                      <td><a href="#">{{c}}</a></td>
+                      <td align="center">{{c.code}}</td>
+                      <td align="center">{{c.credit}}</td>
+                      <td align="center">{{c.hour}}</td>
+                    </tr>
+                  {% endif %}
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+    </div>
+
+    <hr>
+
+    <div>
+      <div>
+        <h4 style="font-weight: bold; text-align: center" class="mt-4">8th Semester</h4>
+
+          <div style="width:50%; margin: 0 auto;">
+            <table class="table table-bordered">
+              <thead>
+                <tr>
+                  <th scope="col" style="text-align: center;">Total Courses</th>
+                  <th scope="col" style="text-align: center;">Total Credits</th>
+                  <th scope="col" style="text-align: center;">Total Hours</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td scope="row" align="center">{{courses_sem8}}</td>
+                  <td align="center">{{credits_sem8}}</td>
+                  <td align="center">{{hours_sem8}}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+      </div>
+      
+          <div>
+            <table class="table table-striped">
+              <thead>
+                <tr>
+                  <th scope="col" style="text-align: center;">#</th>
+                  <th scope="col" style="text-align: center;">Course Title</th>
+                  <th scope="col" style="text-align: center;">Course Code</th>
+                  <th scope="col" style="text-align: center;">Credit</th>
+                  <th scope="col" style="text-align: center;">Hour</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for c in courses %}
+                  {% if c.semester == 8 %}
+                    <tr>
+                      <th scope="row" align="center">{{forloop.counter}}</th>
+                      <td><a href="#">{{c}}</a></td>
+                      <td align="center">{{c.code}}</td>
+                      <td align="center">{{c.credit}}</td>
+                      <td align="center">{{c.hour}}</td>
+                    </tr>
+                  {% endif %}
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+    </div>
+
+    <hr>
+
+    <br/>
 
 
 <script>

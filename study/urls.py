@@ -71,6 +71,8 @@ urlpatterns = [
 
     path('ajax/load-courses/', views.load_courses, name='ajax_load_courses'), # AJAX
 
+    path('ajax/load-teachers/', views.load_teachers, name='ajax_load_teachers'), # AJAX
+    
     # path('department_list/', views.nothing, name='nothing'),
 
     path('need_verification/', views.need_verification, name='need_verification'),

@@ -17,12 +17,14 @@ class CourseForm(forms.ModelForm):
 class QuestionForm(forms.ModelForm):
     class Meta:
         model = Question
-        fields = ['university', 'department', 'year', 'semester', 'course', 'exam_name', 'session', 'question_file']
+        fields = ['university', 'department', 'course_teacher', 'year', 'semester', 'course', 'exam_name', 'session', 'question_file']
         
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
+        
         self.fields['department'].queryset = Department.objects.none()
         self.fields['course'].queryset = Course.objects.none()
+        self.fields['course_teacher'].queryset = Teacher.objects.none()
 
         if all(field in self.data for field in ['university', 'department', 'year', 'semester']):
             try:
@@ -38,14 +40,25 @@ class QuestionForm(forms.ModelForm):
                 self.fields['course'].queryset = Course.objects.filter(
                     department_id=department_id, year=year, semester=semester
                 ).order_by('title')
+                
+                self.fields['course_teacher'].queryset = Teacher.objects.filter(university_id=university_id, department_id=department_id).order_by('name')
 
             except (ValueError, TypeError):
                 pass
         elif self.instance.pk:
             # If the form is for an instance (editing an existing instance), set the queryset based on the instance's data.
             # You'll need to replace these with the appropriate logic based on your model structure.
+            
             self.fields['department'].queryset = self.instance.university.department_set.order_by('name')
+            
             self.fields['course'].queryset = self.instance.department.course_set.filter(year=self.instance.year, semester=self.instance.semester).order_by('title')
+            
+            # self.fields['course_teacher'].queryset = self.instance.university.teacher_set.filter(department=self.instance.department).order_by('name')
+            
+            self.fields['course_teacher'].queryset = Teacher.objects.filter(university_id=self.instance.university_id, department_id=self.instance.department_id).order_by('name')
+
+            # Set the initial value for the 'course_teacher' field to the instance's course_teacher
+            # self.initial['course_teacher'] = self.instance.course_teacher
 
 class NoteForm(forms.ModelForm):
     class Meta:

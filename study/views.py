@@ -34,11 +34,10 @@ def my_department_y(request, university_id, department_id):
     
     department_system = department.system
     
-    # courses = department.course_set.filter(year=1, semester=2)
     courses = department.course_set.all()
     # print(department_system)
     
-    return render(request, 'department/my_department_y.html', {'department': department, 'university': university, 'courses': courses})
+    return render(request, 'department/my_department_y.html', {'department': department, 'university': university, 'courses': courses, 'department_system': department_system})
 
 def my_department_s(request, university_id, department_id):
     university = get_object_or_404(University, pk=university_id)
@@ -46,7 +45,6 @@ def my_department_s(request, university_id, department_id):
     
     department_system = department.system
     
-    # courses = department.course_set.filter(year=1, semester=2)
     courses = department.course_set.all()
     # print(department_system)
     
@@ -160,6 +158,7 @@ def add_question(request):
     if request.method == 'POST':
         form = QuestionForm(request.POST, request.FILES)
         uploader = request.user.profile.nickname
+        
         if form.is_valid():
             question = form.save(commit=False) # Create the question object but don't save it yet
             question.uploaded_by = request.user.profile  # Set the uploaded_by field to the currently logged-in user
@@ -431,6 +430,12 @@ def load_courses(request):
     courses = Course.objects.filter(university_id=university_id, department_id = department_id, year = year, semester = semester).all()
     return render(request, 'course_dropdown_list_options.html', {'courses': courses})
 
+def load_teachers(request):
+    university_id = request.GET.get('university_id')
+    department_id = request.GET.get('department_id')
+    teachers = Teacher.objects.filter(university_id=university_id, department_id = department_id).all()
+    print(teachers)
+    return render(request, 'teachers_dropdown_list_options.html', {'teachers': teachers})
 
 def submit_feedback(request, question_id):
     question = get_object_or_404(Question, pk=question_id)

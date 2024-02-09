@@ -19,13 +19,27 @@ class University(models.Model):
     def __str__(self):
         return f'{self.name}'
 
+class Faculty(models.Model):
+    name = models.CharField(max_length=100)
+    university = models.ForeignKey(University, on_delete=models.CASCADE)
+    def __str__(self):
+        return f'{self.name}'
+
 class Department(models.Model):
     name = models.CharField(max_length=100)
     university = models.ForeignKey(University, on_delete=models.CASCADE)
+    faculty = models.ForeignKey(Faculty, on_delete=models.CASCADE, default=1)
     system = models.CharField(max_length=100, choices=SYSTEM_CHOICES, default='semester')
     ambassadors = models.ManyToManyField(settings.AUTH_USER_MODEL, blank=True)
     def __str__(self):
         return f'{self.name}'
+
+class Teacher(models.Model):
+    name = models.CharField(max_length=100)
+    university = models.ForeignKey(University, on_delete=models.CASCADE, default = 1)
+    faculty = models.ForeignKey(Faculty, on_delete=models.CASCADE, default = 1)
+    department = models.ForeignKey(Department, on_delete=models.CASCADE, default = 1)
+    profile = models.ForeignKey(Profile, on_delete=models.CASCADE, blank = True, null = True)
 
 class Course(models.Model):
     title = models.CharField(max_length=100)
@@ -34,8 +48,8 @@ class Course(models.Model):
     hour = models.PositiveIntegerField(default=100)
     university = models.ForeignKey(University, on_delete=models.CASCADE, default=1)
     department = models.ForeignKey(Department, on_delete=models.CASCADE)
-    year = models.PositiveIntegerField()
-    semester = models.PositiveIntegerField()
+    year = models.PositiveIntegerField(blank=True, null=True)
+    semester = models.PositiveIntegerField(blank=True, null=True)
     syllabus = models.TextField(blank=True, null=True)
 
     def __str__(self):
@@ -49,6 +63,7 @@ class Question(models.Model):
     course = models.ForeignKey(Course, on_delete=models.CASCADE)
     exam_name = models.CharField(max_length=50, choices=EXAM_CHOICES)
     session = models.CharField(max_length=9, choices=SESSION_CHOICES)
+    course_teacher = models.ForeignKey(Teacher, on_delete=models.CASCADE, default = 1)
     question_file = models.FileField(upload_to='study/questions/',
         validators=[FileExtensionValidator(allowed_extensions=['pdf', 'jpg', 'png', 'jpeg'])])
     upload_time = models.DateTimeField(auto_now_add=True)

@@ -1,4 +1,4 @@
-// AAAAAAAAAAA
+// LOVE REACTION
     function handleLoveClick(questionId) {
         fetch(`/handle_love_click/${questionId}/`, {
             method: 'POST',
@@ -18,7 +18,7 @@
     }
 
 
-// AAAAAAAAAAA
+// DEPARTMENT CHOICE DROPDOWN
     $("#id_university").change(function () {
         const url = $("#QuestionForm").attr("data-departments-url");
         const universityId = $(this).val();
@@ -34,7 +34,7 @@
     });
 
 
-    // AAAAAAAAAAAAAAAAAA
+// COURSE CHOICE DROPDOWN
     $("#id_university, #id_department, #id_year, #id_semester").change(function () {
         const url = $("#QuestionForm").attr("data-courses-url");
         const universityId = $("#id_university").val();
@@ -56,9 +56,26 @@
         });
     });
 
+// TEACHER CHOICE DROPDOWN
+$("#id_university, #id_department").change(function () {
+    const url = $("#QuestionForm").attr("data-teachers-url");
+    const universityId = $("#id_university").val();
+    const departmentId = $("#id_department").val();
+
+    $.ajax({
+        url: url,
+        data: {
+            'university_id': universityId,
+            'department_id': departmentId,
+        },
+        success: function (data) {
+            $("#id_teacher").html(data);
+        }
+    });
+});
 
 
-// AAAAAAAAAAAAAAAAAAA
+// SHARE LINK
 // Replace this with your function to retrieve the base URL of your application
 function getBaseURL() {
     // Implement the logic to get the base URL of your application

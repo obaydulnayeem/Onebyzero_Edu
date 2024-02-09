@@ -11,10 +11,83 @@
           <h2 class="card-title">Add Question</h2>
 
           
-          <form method="post" id="QuestionForm" enctype="multipart/form-data" data-departments-url="{% url 'ajax_load_departments' %}" data-courses-url="{% url 'ajax_load_courses' %}">
+          <form method="post" id="QuestionForm" enctype="multipart/form-data" data-departments-url="{% url 'ajax_load_departments' %}" data-courses-url="{% url 'ajax_load_courses' %}" data-teachers-url="{% url 'ajax_load_teachers' %}">
 
             {% csrf_token %}
-            {{ form.as_p }}
+            <div class="mb-3" style="padding: 10px;">
+              
+              <div class="form-group p-2">
+                <label for="{{ form.university.id_for_label }}">University:</label>
+                {{ form.university }}
+              </div>
+
+              <div class="form-group p-2">
+                <label for="{{ form.department.id_for_label }}">Department:</label>
+                {{ form.department }}
+              </div>
+
+              <div class="form-group p-2">
+                <label for="{{ form.course_teacher.id_for_label }}">Course Teacher:</label>
+                {{ form.course_teacher }}
+              </div>
+
+
+               <!-- Set default values for university and department based on the user's profile -->
+               <script>
+                document.addEventListener("DOMContentLoaded", function() {
+                  // Get the selected university and department from the user's profile
+                  var universityId = "{{ user.profile.university.id }}"; // Replace "user.profile.university.id" with the actual attribute path
+                  var departmentId = "{{ user.profile.department.id }}"; // Replace "user.profile.department.id" with the actual attribute path
+                  
+                  // Log the retrieved IDs for debugging
+                  console.log("University ID:", universityId);
+                  console.log("Department ID:", departmentId);
+                  
+                  // Set the default values for the university and department fields
+                  document.getElementById("id_university").value = universityId;
+                  document.getElementById("id_department").value = departmentId;
+
+                
+                });
+              </script>
+
+
+              <div class="form-group p-2">
+                <label for="{{ form.year.id_for_label }}">Year:</label>
+                  {{ form.year }}
+              </div>
+
+              <div class="form-group p-2">
+                <label for="{{ form.semester.id_for_label }}">Semester:</label>
+                  {{ form.semester }}
+              </div>
+
+              <div class="form-group p-2">
+                <label for="{{ form.course.id_for_label }}">Course Title:</label>
+                  {{ form.course }}
+              </div>
+
+              <div class="form-group p-2">
+                <label for="{{ form.exam_name.id_for_label }}">Exam Name:</label>
+                  {{ form.exam_name }}
+              </div>
+
+              <div class="form-group p-2">
+                <label for="{{ form.session.id_for_label }}">Session:</label>
+                  {{ form.session }}
+              </div>
+
+              {% comment %} <div class="form-group p-2">
+                <label for="{{ form.course_teacher.id_for_label }}">Course Teacher:</label>
+                {{ form.course_teacher }}
+              </div> {% endcomment %}
+
+              <div class="form-group p-2">
+                <label for="{{ form.question_file.id_for_label }}">Attach File:</label>
+                  {{ form.question_file }}
+              </div>
+
+            <div>
 
             <button type="submit" class="btn btn-primary">Submit</button>
             
