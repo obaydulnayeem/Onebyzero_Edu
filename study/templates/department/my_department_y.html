@@ -113,10 +113,10 @@
               </thead>
               <tbody>
                 {% for c in courses %}
-                  {% if c.year == 1 %}
+                  {% if c.year == '1st' %}
                     <tr>
                       <th scope="row" align="center">{{forloop.counter}}</th>
-                      <td><a href="#">{{c}}</a></td>
+                      <td><a href="{% url 'view_course' c.id %}">{{c}}</a></td>
                       <td align="center">{{c.code}}</td>
                       <td align="center">{{c.credit}}</td>
                       <td align="center">{{c.hour}}</td>
@@ -168,10 +168,10 @@
               </thead>
               <tbody>
                 {% for c in courses %}
-                  {% if c.year == 2 %}
+                  {% if c.year == '2nd' %}
                     <tr>
                       <th scope="row" align="center">{{forloop.counter}}</th>
-                      <td><a href="#">{{c}}</a></td>
+                      <td><a href="{% url 'view_course' c.id %}">{{c}}</a></td>
                       <td align="center">{{c.code}}</td>
                       <td align="center">{{c.credit}}</td>
                       <td align="center">{{c.hour}}</td>
@@ -222,10 +222,10 @@
               </thead>
               <tbody>
                 {% for c in courses %}
-                  {% if c.year == 3 %}
+                  {% if c.year == '3rd' %}
                     <tr>
                       <th scope="row" align="center">{{forloop.counter}}</th>
-                      <td><a href="#">{{c}}</a></td>
+                      <td><a href="{% url 'view_course' c.id %}">{{c}}</a></td>
                       <td align="center">{{c.code}}</td>
                       <td align="center">{{c.credit}}</td>
                       <td align="center">{{c.hour}}</td>
@@ -277,10 +277,10 @@
               </thead>
               <tbody>
                 {% for c in courses %}
-                  {% if c.year == 4 %}
+                  {% if c.year == '4th' %}
                     <tr>
                       <th scope="row" align="center">{{forloop.counter}}</th>
-                      <td><a href="#">{{c}}</a></td>
+                      <td><a href="{% url 'view_course' c.id %}">{{c}}</a></td>
                       <td align="center">{{c.code}}</td>
                       <td align="center">{{c.credit}}</td>
                       <td align="center">{{c.hour}}</td>

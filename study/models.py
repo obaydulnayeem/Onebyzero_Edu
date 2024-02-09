@@ -13,6 +13,24 @@ SYSTEM_CHOICES = (
     ('semester', 'Semester'),
 )
 
+# SEMESTER_CHOICES = (
+#     (FIRST_SEM, '1st'),
+#     (SECOND_SEM, '2nd'),
+#     (THIRD_SEM, '3rd'),
+#     (FOURTH_SEM, '4th'),
+#     (FIFTH_SEM, '5th'),
+#     (SIXTH_SEM, '6th'),
+#     (SEVENTH_SEM, '7th'),
+#     (EIGHTH_SEM, '8th'),
+# )
+
+# YEAR_CHOICES = (
+#     (FIRST_YEAR, '1st'),
+#     (SECOND_YEAR, '2nd'),
+#     (THIRD_YEAR, '3rd'),
+#     (FOURTH_YEAR, '4th'),
+# )
+
 class University(models.Model):
     name = models.CharField(max_length=100)
     # location = models.CharField(max_length=100)
@@ -40,6 +58,9 @@ class Teacher(models.Model):
     faculty = models.ForeignKey(Faculty, on_delete=models.CASCADE, default = 1)
     department = models.ForeignKey(Department, on_delete=models.CASCADE, default = 1)
     profile = models.ForeignKey(Profile, on_delete=models.CASCADE, blank = True, null = True)
+    
+    def __str__(self):
+        return f'{self.name}'
 
 class Course(models.Model):
     title = models.CharField(max_length=100)
@@ -48,8 +69,8 @@ class Course(models.Model):
     hour = models.PositiveIntegerField(default=100)
     university = models.ForeignKey(University, on_delete=models.CASCADE, default=1)
     department = models.ForeignKey(Department, on_delete=models.CASCADE)
-    year = models.PositiveIntegerField(blank=True, null=True)
-    semester = models.PositiveIntegerField(blank=True, null=True)
+    year = models.CharField(max_length=5, choices=YEAR_CHOICES, blank=True, null=True)
+    semester = models.CharField(max_length=5, choices=SEMESTER_CHOICES, blank=True, null=True)
     syllabus = models.TextField(blank=True, null=True)
 
     def __str__(self):
@@ -58,8 +79,8 @@ class Course(models.Model):
 class Question(models.Model):
     university = models.ForeignKey(University, on_delete=models.CASCADE)
     department = models.ForeignKey(Department, on_delete=models.CASCADE)
-    year = models.PositiveIntegerField(choices=YEAR_CHOICES)
-    semester = models.PositiveIntegerField(choices=SEMESTER_CHOICES)
+    year = models.CharField(max_length=5, choices=YEAR_CHOICES)
+    semester = models.CharField(max_length=5, choices=SEMESTER_CHOICES)
     course = models.ForeignKey(Course, on_delete=models.CASCADE)
     exam_name = models.CharField(max_length=50, choices=EXAM_CHOICES)
     session = models.CharField(max_length=9, choices=SESSION_CHOICES)
@@ -77,8 +98,8 @@ class Question(models.Model):
 class NoteModel(models.Model):
     university = models.ForeignKey(University, on_delete=models.CASCADE)
     department = models.ForeignKey(Department, on_delete=models.CASCADE)
-    year = models.PositiveIntegerField(choices=YEAR_CHOICES)
-    semester = models.PositiveIntegerField(choices=SEMESTER_CHOICES)
+    year = models.CharField(max_length=5, choices=YEAR_CHOICES, blank=True, null=True)
+    semester = models.CharField(max_length=5, choices=SEMESTER_CHOICES, blank=True, null=True)
     course = models.ForeignKey(Course, on_delete=models.CASCADE)
     # exam_name = models.CharField(max_length=50, choices=EXAM_CHOICES)
     session = models.CharField(choices=SESSION_CHOICES, max_length=50)
@@ -97,8 +118,8 @@ class NoteModel(models.Model):
 class BookModel(models.Model):
     university = models.ForeignKey(University, on_delete=models.CASCADE)
     department = models.ForeignKey(Department, on_delete=models.CASCADE)
-    year = models.PositiveIntegerField(choices=YEAR_CHOICES)
-    semester = models.PositiveIntegerField(choices=SEMESTER_CHOICES)
+    year = models.CharField(max_length=5, choices=YEAR_CHOICES, blank=True, null=True)
+    semester = models.CharField(max_length=5, choices=SEMESTER_CHOICES, blank=True, null=True)
     course = models.ForeignKey(Course, on_delete=models.CASCADE)
     # session = models.CharField(choices=SESSION_CHOICES, max_length=50)
     book_title = models.CharField(max_length=200)
@@ -117,8 +138,8 @@ class BookModel(models.Model):
 class LectureModel(models.Model):
     university = models.ForeignKey(University, on_delete=models.CASCADE)
     department = models.ForeignKey(Department, on_delete=models.CASCADE)
-    year = models.PositiveIntegerField(choices=YEAR_CHOICES)
-    semester = models.PositiveIntegerField(choices=SEMESTER_CHOICES)
+    year = models.CharField(max_length=5, choices=YEAR_CHOICES, blank=True, null=True)
+    semester = models.CharField(max_length=5, choices=SEMESTER_CHOICES, blank=True, null=True)
     course = models.ForeignKey(Course, on_delete=models.CASCADE)
     session = models.CharField(choices=SESSION_CHOICES, max_length=50)
     lecture_title = models.CharField(max_length=200)

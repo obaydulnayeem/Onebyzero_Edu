@@ -104,7 +104,7 @@ function generateShareLink(resourceId) {
     tooltip.style.bottom = '500px';
     tooltip.style.right = '10px';
     tooltip.style.padding = '10px';
-    tooltip.style.backgroundColor = '#5C636A';
+    tooltip.style.backgroundColor = '#65a147';
     tooltip.style.color = 'white';
     tooltip.style.borderRadius = '5px';
     tooltip.style.opacity = '0';

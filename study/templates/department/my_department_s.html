@@ -140,10 +140,10 @@
               </thead>
               <tbody>
                 {% for c in courses %}
-                  {% if c.semester == 1 %}
+                  {% if c.semester == '1st' %}
                     <tr>
                       <th scope="row" align="center">{{forloop.counter}}</th>
-                      <td><a href="#">{{c}}</a></td>
+                      <td><a href="{% url 'view_course' c.id %}">{{c}}</a></td>
                       <td align="center">{{c.code}}</td>
                       <td align="center">{{c.credit}}</td>
                       <td align="center">{{c.hour}}</td>
@@ -194,10 +194,10 @@
               </thead>
               <tbody>
                 {% for c in courses %}
-                  {% if c.semester == 2 %}
+                  {% if c.semester == '2nd' %}
                     <tr>
                       <th scope="row" align="center">{{forloop.counter}}</th>
-                      <td><a href="#">{{c}}</a></td>
+                      <td><a href="{% url 'view_course' c.id %}">{{c}}</a></td>
                       <td align="center">{{c.code}}</td>
                       <td align="center">{{c.credit}}</td>
                       <td align="center">{{c.hour}}</td>
@@ -248,10 +248,10 @@
               </thead>
               <tbody>
                 {% for c in courses %}
-                  {% if c.semester == 3 %}
+                  {% if c.semester == '3rd' %}
                     <tr>
                       <th scope="row" align="center">{{forloop.counter}}</th>
-                      <td><a href="#">{{c}}</a></td>
+                      <td><a href="{% url 'view_course' c.id %}">{{c}}</a></td>
                       <td align="center">{{c.code}}</td>
                       <td align="center">{{c.credit}}</td>
                       <td align="center">{{c.hour}}</td>
@@ -303,10 +303,10 @@
               </thead>
               <tbody>
                 {% for c in courses %}
-                  {% if c.semester == 4 %}
+                  {% if c.semester == '4th' %}
                     <tr>
                       <th scope="row" align="center">{{forloop.counter}}</th>
-                      <td><a href="#">{{c}}</a></td>
+                      <td><a href="{% url 'view_course' c.id %}">{{c}}</a></td>
                       <td align="center">{{c.code}}</td>
                       <td align="center">{{c.credit}}</td>
                       <td align="center">{{c.hour}}</td>
@@ -357,10 +357,10 @@
               </thead>
               <tbody>
                 {% for c in courses %}
-                  {% if c.semester == 5 %}
+                  {% if c.semester == '5th' %}
                     <tr>
                       <th scope="row" align="center">{{forloop.counter}}</th>
-                      <td><a href="#">{{c}}</a></td>
+                      <td><a href="{% url 'view_course' c.id %}">{{c}}</a></td>
                       <td align="center">{{c.code}}</td>
                       <td align="center">{{c.credit}}</td>
                       <td align="center">{{c.hour}}</td>
@@ -411,10 +411,10 @@
               </thead>
               <tbody>
                 {% for c in courses %}
-                  {% if c.semester == 6 %}
+                  {% if c.semester == '6th' %}
                     <tr>
                       <th scope="row" align="center">{{forloop.counter}}</th>
-                      <td><a href="#">{{c}}</a></td>
+                      <td><a href="{% url 'view_course' c.id %}">{{c}}</a></td>
                       <td align="center">{{c.code}}</td>
                       <td align="center">{{c.credit}}</td>
                       <td align="center">{{c.hour}}</td>
@@ -465,10 +465,10 @@
               </thead>
               <tbody>
                 {% for c in courses %}
-                  {% if c.semester == 7 %}
+                  {% if c.semester == '7th' %}
                     <tr>
                       <th scope="row" align="center">{{forloop.counter}}</th>
-                      <td><a href="#">{{c}}</a></td>
+                      <td><a href="{% url 'view_course' c.id %}">{{c}}</a></td>
                       <td align="center">{{c.code}}</td>
                       <td align="center">{{c.credit}}</td>
                       <td align="center">{{c.hour}}</td>
@@ -519,10 +519,10 @@
               </thead>
               <tbody>
                 {% for c in courses %}
-                  {% if c.semester == 8 %}
+                  {% if c.semester == '8th' %}
                     <tr>
                       <th scope="row" align="center">{{forloop.counter}}</th>
-                      <td><a href="#">{{c}}</a></td>
+                      <td><a href="{% url 'view_course' c.id %}">{{c}}</a></td>
                       <td align="center">{{c.code}}</td>
                       <td align="center">{{c.credit}}</td>
                       <td align="center">{{c.hour}}</td>

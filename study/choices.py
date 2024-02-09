@@ -1,8 +1,8 @@
 # YEAR -------------------------------------------------
-FIRST_YEAR = 1
-SECOND_YEAR = 2
-THIRD_YEAR = 3
-FOURTH_YEAR = 4
+FIRST_YEAR = '1st'
+SECOND_YEAR = '2nd'
+THIRD_YEAR = '3rd'
+FOURTH_YEAR = '4th'
 
 YEAR_CHOICES = (
     (FIRST_YEAR, '1st Year'),
@@ -12,14 +12,14 @@ YEAR_CHOICES = (
 )
 
 # SEMESTER -------------------------------------------------
-FIRST_SEM = 1
-SECOND_SEM = 2
-THIRD_SEM = 3
-FOURTH_SEM = 4
-FIFTH_SEM = 5
-SIXTH_SEM = 6
-SEVENTH_SEM = 7
-EIGHTH_SEM = 8 
+FIRST_SEM = '1st'
+SECOND_SEM = '2nd'
+THIRD_SEM = '3rd'
+FOURTH_SEM = '4th'
+FIFTH_SEM = '5th'
+SIXTH_SEM = '6th'
+SEVENTH_SEM = '7th'
+EIGHTH_SEM = '8th'
 
 SEMESTER_CHOICES = (
     (FIRST_SEM, '1st Semester'),
