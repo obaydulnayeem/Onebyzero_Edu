@@ -1,0 +1,50 @@
+/* FAQ */
+/* FAQ COLLAPSE/EXPAND STYLES */
+* {
+    box-sizing: border-box;
+  }
+  .faqanswer {
+      display: none;
+      width: 590px;
+      background: #e5e5e5;
+      padding: 12px 20px 0 30px;	
+  }
+  
+  .faqanswer p {
+      font-size: 15px;
+      line-height: 17px;	
+  }
+  
+  
+  a.active {
+      font-weight: bold;
+  }
+  
+  .togglefaq {
+      text-decoration: none;
+      color: #333;
+      font-size: 15px;
+      padding: 10px 30px;
+      line-height: 20px;
+      display: block;
+      border: 1px solid #d0d0d0;
+      width: 590px;
+      margin-bottom: -1px;
+  }
+  .icon-plus {
+      color: #5ec4cd;
+      margin-right: 20px;
+      font-size: 20px;
+      float:left;
+  }
+  
+  .icon-minus {
+      color: #5ec4cd;
+      margin-right: 20px;
+      font-size: 20px;
+      float:left;
+  }
+  p {
+    margin: 0;
+    padding-bottom: 20px;
+  }

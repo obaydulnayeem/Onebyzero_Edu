@@ -102,21 +102,7 @@ body {
 
 
 
-/* CSS styles */
-.back-button {
-    background-color: #3f4041; /* Blue background color */
-    color: white; /* White text color */
-    border: none; /* Remove border */
-    padding: 6px 15px; /* Add padding */
-    border-radius: 5px; /* Add border radius */
-    cursor: pointer; /* Change cursor to pointer */
-    transition: background-color 0.3s; /* Add transition effect */
-   
-}
 
-.back-button:hover {
-    background-color: #232324; /* Darker blue on hover */
-}
 
 
 
@@ -136,35 +122,3 @@ body {
 }
 
 
-/* CSS for active page*/
-.active-page {
-    background-color: #343a40; /* Change this to the desired background color */
-    color: white; /* Change this to the desired text color */
-    border-radius: 10px;
-    /* padding: -20px; */
-}
-
-
-/* FOOTER */
-footer {
-    background-color: #343a40; /* Dark background color */
-    color: #fff; /* Light text color */
-    padding-top: 10px;
-    padding-bottom: 10px;
-    font-size: 14px;
-}
-
-footer p {
-    margin-bottom: 0; /* Remove default margin */
-}
-
-/* Optionally, you can style the container and row for additional layout control */
-.container {
-    max-width: 1200px;
-    margin: 0 auto; /* Center the container */
-}
-
-.row {
-    display: flex;
-    justify-content: center; /* Center the content horizontally */
-}

@@ -49,7 +49,8 @@ def my_department_s(request, university_id, department_id):
     # print(department_system)
     
     return render(request, 'department/my_department_s.html', {'department': department, 'university': university, 'courses': courses})
-    
+
+from django.db.models import Q
 
 def my_university(request, university_id):
     university = get_object_or_404(University, pk=university_id)
@@ -58,8 +59,10 @@ def my_university(request, university_id):
     department_with_all_info = Department.objects.annotate(
         total_teachers=models.Count('teacher'),
         total_seats=models.Sum('num_of_seat'),
-        total_students=Count('profile')
-        ).all()
+        total_students=Count('profile', filter=Q(profile__user_type='student'))  # Count of all students in the department
+    )
+    # ).all()
+    
     
     # for department in department_list:
     #     print(f"Department: {department.name}, Total Teachers: {department.total_teachers}")

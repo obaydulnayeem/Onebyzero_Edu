@@ -6,11 +6,16 @@ from account.models import Profile
 def home(request):
     # TOTALS
     total_questions = Question.objects.count()
+    total_books = BookModel.objects.count()
     total_notes = NoteModel.objects.count()
+    total_slides = LectureModel.objects.count()
     total_resources = total_questions + total_notes
+    
     total_departments = Department.objects.count()
     total_courses = Course.objects.count()
     total_students = User.objects.count()
+    
+    
     
     user = request.user
     university = Profile.university
@@ -26,23 +31,33 @@ def home(request):
             pass
         
     # print('dept:', department , 'year:', year, 'sem:', semester)
-    if user.is_authenticated:
-        context = {
-            'profile_object': profile_object,
-            
+    if not user.is_authenticated:
+        context = { # without profile object
+            'total_questions': total_questions,
+            'total_books': total_books,
+            'total_slides': total_slides,
+            'total_notes': total_notes,
             'total_resources': total_resources,
+            
             'total_courses': total_courses,
             'total_departments': total_departments,
             'total_students': total_students,
             'university': university,
             'department_id': department,
             'year_id': year,
-            'semester_id': semester,
+            'semester_id': semester
         }
     
     else:
-        context = {
+        context = { # ALL
+            'profile_object': profile_object,
+            
+            'total_questions': total_questions,
+            'total_books': total_books,
+            'total_slides': total_slides,
+            'total_notes': total_notes,
             'total_resources': total_resources,
+            
             'total_courses': total_courses,
             'total_departments': total_departments,
             'total_students': total_students,
