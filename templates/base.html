@@ -24,7 +24,7 @@
 </head>
 
 <body>
-
+    
     <header id="main-header">
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
             <div class="container-fluid">
@@ -52,20 +52,33 @@
                     <!-- Navbar items aligned to the right -->
                     <ul class="navbar-nav ms-auto">
                         {% if user.is_authenticated %}
+
+\
+        
                             <li class="nav-item">
-                                <a class="nav-link active" aria-current="page" href="{% url 'home' %}">Home</a>
+                                <a class="nav-link {% if request.path == '/' %}active-page{% endif %}" href="{% url 'home' %}">Home</a>
                             </li>
+
                             {% if user.profile.university and user.profile.department %}
                                 {% if user.profile.department.system == 'year' %}
-                                    <li class="nav-item">
-                                        <a class="nav-link active" aria-current="page" href="{% url 'my_department_y' user.profile.university.id user.profile.department.id %}">Resources</a>
-                                    </li>
+                                <li class="nav-item">
+                                    <a class="nav-link {% if '/my_department_y/' in request.path %}active-page{% endif %}" href="{% url 'my_department_y' user.profile.university.id user.profile.department.id %}">My Department</a>
+                                </li>
+                                
                                 {% else %}
                                     <li class="nav-item">
-                                        <a class="nav-link active" aria-current="page" href="{% url 'my_department_s' user.profile.university.id user.profile.department.id %}">Resources</a>
+                                        <a class="nav-link active" aria-current="page" href="{% url 'my_department_s' user.profile.university.id user.profile.department.id %}">My Department</a>
                                     </li>
                                 {% endif %}
                             {% endif %}
+
+                                    <li class="nav-item">
+                                        <a class="nav-link active" aria-current="page" href="{% url 'my_university' user.profile.university.id %}">My University</a>
+                                    </li>
+
+                                    <li class="nav-item">
+                                        <a class="nav-link active" aria-current="page" href="#">Others University</a>
+                                    </li>
                         {% endif %}
 
 
@@ -73,21 +86,26 @@
                             <li class="nav-item">
                                 <a class="nav-link active" href="{% url 'leaderboard' %}">Leaderboard</a>
                             </li>
-                            <li class="nav-item">
-                                <a class="nav-link active" href="{% url 'admin_dashboard' %}">Admin</a>
-                            </li>
+                            
                             <li class="nav-item dropdown">
                                 <div class="dropdown">
                                     <a class="nav-link active dropdown-toggle" href="#" id="profileDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                         {% if user.profile.profile_image %}
-                                            <img src="{{ user.profile.profile_image.url }}" alt="Profile Image" class="profile-image rounded-circle" style="width: 30px; height: 30px;">
+                                            <img src="{{ user.profile.profile_image.url }}" alt="Profile Image" class="profile-image rounded-circle" style="width: 37px; height: 40px;">
                                         {% else %}
                                             <i class="fas fa-user-circle"></i> <!-- Or any other FontAwesome user icon -->
                                         {% endif %}
                                     </a>
                                     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="profileDropdown">
+                                            {% if user.profile.fullname %}
+                                        <h6 style="text-align: center">{{ user.profile.fullname }}</h6>
+                                            {% else %}  
+                                        <h5 style="text-align: center">{{ user.username }}
+                                            {% endif %}</h5>
+                                        <li><hr class="dropdown-divider"></li>
                                         <li><a class="dropdown-item" href="{% url 'my_profile' %}">Profile</a></li>
                                         <li><hr class="dropdown-divider"></li>
+                                        <li><a class="dropdown-item" href="{% url 'admin_dashboard' %}">Admin</a></li>
                                         <li><a class="dropdown-item" href="{% url 'logout' %}">Logout</a></li>
                                     </ul>
                                 </div>
@@ -106,9 +124,13 @@
         </nav>
     </header>
     
+    <!-- Back button -->
+ 
+        {% if not is_home_page %}
+            <button class="back-button" onclick="goBack()" style="margin-left: 50px; margin-top: 50px; margin-bottom: -15px">Back</button>
+        {% endif %}
+  
 
-
-    
 
     <main>
         {% block content %}
@@ -116,9 +138,49 @@
         {% endblock %}
     </main>
 
-    <footer class="fixed-bottom text-center">
-        <p>&copy; Onebyzero Edu</p>
+    <footer class="bg-dark text-light py-4">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4">
+                    <h5 class="mb-3">Useful Links</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="#" class="text-light">About Us</a></li>
+                        <li><a href="#" class="text-light">Refund Policy</a></li>
+                        <li><a href="#" class="text-light">Privacy Policy</a></li>
+                        <li><a href="#" class="text-light">Terms and Conditions</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-4">
+                    <h5 class="mb-3">Contact Info</h5>
+                    <p class="mb-2"><i class="fas fa-phone-alt me-2"></i>Phone: +1234567890</p>
+                    <p class="mb-0"><i class="fas fa-envelope me-2"></i>Email: info@example.com</p>
+                </div>
+                <div class="col-md-4">
+                    <h5 class="mb-3">Community</h5>
+                    <ul class="list-inline">
+                        <li class="list-inline-item"><a href="#" class="text-light"><i class="fab fa-facebook"></i></a></li>
+                        <li class="list-inline-item"><a href="#" class="text-light"><i class="fab fa-youtube"></i></a></li>
+                        <li class="list-inline-item"><a href="#" class="text-light"><i class="fab fa-linkedin"></i></a></li>
+                    </ul>
+                </div>
+            </div>
+            <hr class="my-4 border-light">
+            <div class="row">
+                <div class="col-md-6">
+                    <h5 class="mb-3">Blog</h5>
+                    <p class="mb-0">Read our latest blog posts</p>
+                </div>
+                <div class="col-md-6 text-md-end">
+                    <h5 class="mb-0">&copy; Onebyzero Edu</h5>
+                    <p>A River of Educational Resources</p>
+                    <p>2022 to Present</p>
+                </div>
+            </div>
+        </div>
     </footer>
+    
+    
+    
 
     
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>

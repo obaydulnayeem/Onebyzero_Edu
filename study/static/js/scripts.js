@@ -1,21 +1,21 @@
 // LOVE REACTION
-    function handleLoveClick(questionId) {
-        fetch(`/handle_love_click/${questionId}/`, {
-            method: 'POST',
-            headers: {
-                'X-CSRFToken': '{{ csrf_token }}'
-            }
-        })
-        .then(response => response.json())
-        .then(data => {
-            const loveCountElement = document.getElementById(`loveCount${questionId}`);
-            loveCountElement.textContent = data.love_count;
-            const loveIcon = document.getElementById(`loveIcon${questionId}`);
-            loveIcon.classList.remove('far');
-            loveIcon.classList.add('fas');
-        })
-        .catch(error => console.log(error));
-    }
+function handleLoveClick(questionId) {
+    // Send an AJAX request to increment the love count
+    $.ajax({
+        type: 'POST',
+        url: '{% url "increment_love_count" %}',  // Replace with your backend URL
+        data: {
+            'question_id': questionId
+        },
+        success: function(response) {
+            // Update the love count button text with the new value
+            $('#loveBtn' + questionId).text(response.love_count);
+        },
+        error: function(xhr, status, error) {
+            console.error(xhr.responseText);
+        }
+    });
+}
 
 
 // DEPARTMENT CHOICE DROPDOWN
@@ -145,3 +145,14 @@ function generateShareLink(resourceId) {
             card.classList.toggle('flipped');
         });
     });
+
+
+// BACK BUTTON FOR ALL PAGES
+    function goBack() {
+        window.history.back();
+    }
+    
+// SCROLL TO TOP BUTTON
+    function scrollToTop() {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }

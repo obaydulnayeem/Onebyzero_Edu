@@ -116,23 +116,26 @@
                                             <span id="loveCount{{ qs.id }}">{{ qs.love_count }}</span> <!-- Counter for the love reaction -->
                                         </button> {% endcomment %}
                                     
-                                    <br/>
+                                        <p class="card-text">{% if qs.uploaded_by.profile_image %}<img src="{{ qs.uploaded_by.profile_image.url }}" alt="Profile Picture" style="width: 30px; height: 30px; object-fit: cover; border-radius: 50%;">{% else %} <i class="fas fa-user-circle" style="font-size: 24px;"></i>
+                                            {% endif %}
+                                        
+                                                {% if qs.uploaded_by.nickname %}
+                                                    {{ qs.uploaded_by.nickname }} <span style="opacity: 0.80">({{ qs.uploaded_by.departmental_batch}} batch)</span>
+                                                {% else %}
+                                                    {{ qs.uploaded_by.user }} ({{ qs.uploaded_by.departmental_batch}} batch)
+                                                {% endif %}
+                                            </p>
+
+                                            <p style="margin-top: -20px; margin-left: 10px; opacity: 0.80">Uploaded {{ qs.upload_time|time_ago }} ago</p>
+                                    {% comment %} <br/> {% endcomment %}
 
                                     <div class="text-center mb-2 pt-2 pb-1" style="background-color: #5e6266;">
                                         <h6 class="card-title" style="color: white">{{ qs.exam_name }} ({{ qs.session }})</h6>
                                     </div>
 
-                                    <div>
-                                        <p class="card-text">{% if qs.uploaded_by.profile_image %}<img src="{{ qs.uploaded_by.profile_image.url }}" alt="Profile Picture" style="width: 30px; height: 30px; object-fit: cover; border-radius: 50%;">{% else %} <i class="fas fa-user-circle" style="font-size: 24px;"></i>
-                                        {% endif %}
                                     
-                                            {% if qs.uploaded_by.nickname %}
-                                            {{ qs.uploaded_by.nickname }}, {{ qs.upload_time|time_ago }} ago
-                                            {% else %}
-                                                {{ qs.uploaded_by.user }}, {{ qs.upload_time|time_ago }} ago
-                                            {% endif %}
-                                        </p>
-                                    </div>
+                                        
+                                    
 
                                     {% comment %} <div class="text-center">
                                         <p><i class="fas fa-file-image" style="font-size: 50px; opacity: 0.25;"></i></p>
@@ -141,7 +144,7 @@
                                     <br/>
 
                                     <div>
-                                        <p class="card-text"><i class="fas fa-user-graduate"></i>
+                                        <p class="card-text" style="text-align: center; margin-top: -35px"><i class="fas fa-user-graduate"></i>
                                             {{ qs.course_teacher }}</p>
                                     </div>
 
@@ -153,11 +156,14 @@
                                             <i class="far fa-eye"></i>
                                         </a>
 
+
                                         {% else %}
                                         <a href="{% url 'need_verification' %}" class="btn btn-primary  view-btn" data-toggle="modal" data-target="#imageModal{{ qs.id }}">
                                             <i class="far fa-eye"></i> Not View
                                         </a>
                                         {% endif %}
+
+                                        <button class="love-count-btn" id="loveBtn{{ qs.id }}" onclick="handleLoveClick({{ qs.id }})">{{ qs.love_count }}</button>
                                     </div>
 
                                     {% comment %} <a href="{% url 'delete_question' qs.id %}" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this question?')">

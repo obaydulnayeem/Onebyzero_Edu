@@ -51,6 +51,64 @@ def my_department_s(request, university_id, department_id):
     return render(request, 'department/my_department_s.html', {'department': department, 'university': university, 'courses': courses})
     
 
+def my_university(request, university_id):
+    university = get_object_or_404(University, pk=university_id)
+    departments = university.department_set.all()
+    
+    department_with_all_info = Department.objects.annotate(
+        total_teachers=models.Count('teacher'),
+        total_seats=models.Sum('num_of_seat'),
+        total_students=Count('profile')
+        ).all()
+    
+    # for department in department_list:
+    #     print(f"Department: {department.name}, Total Teachers: {department.total_teachers}")
+    
+    # teacher_count = university.teacher_set.count()
+    # print(teacher_count)
+    
+#     department_with_all_info = (
+#     Department.objects
+#     .filter(university=university)
+#     .values('id', 'name', 'faculty', 'system', 'established', 'num_of_seats').annotate(
+#         num_teachers=Count('teacher'),
+#     )
+# )
+    context = {
+        'university': university,
+        'departments': departments,
+        # 'department_with_all_info': department_with_all_info,
+        'department_with_all_info': department_with_all_info,
+    }
+    return render(request, 'university/my_university.html', context)
+
+
+from django.http import JsonResponse
+from django.views.decorators.http import require_POST
+from .models import Department
+
+@require_POST
+def update_department_order(request):
+    new_order = request.POST.getlist('order[]')
+    # Update the database with the new order
+    # Example:
+    # for index, department_id in enumerate(new_order, start=1):
+    #     Department.objects.filter(id=department_id).update(order=index)
+    return JsonResponse({'success': True})
+
+
+import requests
+from bs4 import BeautifulSoup
+
+def scrape_data(request):
+    url = "https://bu.ac.bd/?ref=teacher_profile_data_mathematics"
+    response = requests.get(url)
+    soup = BeautifulSoup(response.text, "html.parser")
+    teacher_names = [name.text.strip() for name in soup.find_all("h2")]
+    print(teacher_names)
+    return render(request, 'university/my_university.html', {'teacher_names': teacher_names})
+
+
 from django.contrib import messages
 
 def pin_year_and_semester(request, year, semester):
@@ -226,7 +284,7 @@ def view_questions(request, course_id):
     # user_profile_for_image = Profile.objects.get(user_id=users_with_question_count[0]['uploaded_by'])
     user_profile = Profile.objects.get(user=request.user)
     # user_department_id = user_profile.department.id
-
+    
     context = {
         'questions': questions,
         'course': course,
@@ -406,9 +464,10 @@ def view_course(request, course_id):
     
     return render(request, 'view_course.html', {'course': course, 'university': university, 'department': department, 'question_count': question_count, 'note_count': note_count, 'book_count': book_count, 'lecture_count': lecture_count, 'syllabus': syllabus})
 
-def handle_love_click(request, question_id):
+def increment_love_count(request):
     if request.method == 'POST':
-        question = Question.objects.get(pk=question_id)
+        question_id = request.POST.get('question_id')
+        question = get_object_or_404(Question, pk=question_id)
         question.love_count += 1
         question.save()
         return JsonResponse({'love_count': question.love_count})
@@ -512,6 +571,7 @@ def leaderboard(request):
     users_queryset = Profile.objects.all()
     
     users_with_all_info = users_queryset.annotate(
+        username = F('user__username'),
         user_fullname=F('fullname'),
         user_image=F('profile_image'),
         university_name=F('university__name'),
@@ -526,7 +586,7 @@ def leaderboard(request):
                 output_field=IntegerField()
             ),
     ).values(
-    'id', 'user_fullname', 'user_image', 'university_name', 'department_name', 'dept_batch', 'num_question_uploads', 'num_book_uploads', 'num_note_uploads', 'num_slide_uploads', 'num_total_uploads').order_by('-num_total_uploads')
+    'id', 'username', 'user_fullname', 'user_image', 'university_name', 'department_name', 'dept_batch', 'num_question_uploads', 'num_book_uploads', 'num_note_uploads', 'num_slide_uploads', 'num_total_uploads').order_by('-num_total_uploads')
 
     # print(users_with_all_info)
     

@@ -3,7 +3,8 @@
 {% block title %}Leaderboard{% endblock %}
 
 {% block content %}
-<h1>Leaderboard</h1>
+<br/>
+<h1 style="text-align: center">Leaderboard</h1>
 
 
 <div class="container">
@@ -34,7 +35,13 @@
                     <td>
                         {% if c.id %}
                             {% comment %} <img src="{{ c.image.url }}" alt="" style="max-width: 100px; max-height: 100px;"> {% endcomment %}
-                            <a href="{% url 'view_profile' c.id %}">{{ c.user_fullname }}</a>
+                            <a href="{% url 'view_profile' c.id %}">
+                                {% if c.user_fullname %}
+                                    {{ c.user_fullname }}
+                                {% else %}
+                                    {{ c.username }}
+                                {% endif %}
+                            </a>
                         {% else %}
                             No valid ID for {{ c.username }}
                         {% endif %}

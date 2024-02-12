@@ -1,0 +1,69 @@
+{% extends "base.html" %}
+
+{% block title %}My University{% endblock %}
+
+{% block content %}
+<h1 style="text-align: center">{{ university.name }}</h1>
+
+<div class="table-wrapper mt-3 mx-5">
+    <div class="table-responsive">
+        <table id="sortable-table" class="table table-striped table-hover">
+            <thead class="bg-secondary text-light">
+                <tr>
+                    <th>Faculty</th>
+                    <th>Department</th>
+                    <th>Established</th>
+                    <th>Teachers</th>
+                    <th>Students (Per Batch)</th>
+                    <th>Uploaded Resources</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for d in department_with_all_info %}
+                    <tr data-id="{{ d.id }}">
+                        <td><a href="#" class="text-decoration-none">{{ d.faculty.name }}</a></td>
+                        <td><a href="#" class="text-decoration-none">{{ d.name }}</a></td>
+                        <td>{{ d.established }}</td>
+                        <td>{{ d.total_teachers }}</td>
+                        <td>{{ d.total_seats }}</td>
+                        <td>*</td>
+                    </tr>
+                {% empty %}
+                    <tr>
+                        <td colspan="6">No departments available.</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block scripts %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.14.0/Sortable.min.js"></script>
+<script>
+    // Initialize SortableJS
+    const sortableTable = document.getElementById('sortable-table');
+    const sortable = new Sortable(sortableTable.getElementsByTagName('tbody')[0], {
+        animation: 150,
+        onUpdate: function (evt) {
+            // Fetch the updated order and send it to the server for processing
+            const newOrder = [];
+            const rows = sortableTable.getElementsByTagName('tbody')[0].getElementsByTagName('tr');
+            for (let i = 0; i < rows.length; i++) {
+                newOrder.push(rows[i].dataset.id);
+            }
+            // Send the newOrder to the server via AJAX
+            fetch('/update_department_order/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': '{{ csrf_token }}', // Add CSRF token
+                },
+                body: JSON.stringify({ order: newOrder }),
+            });
+        },
+    });
+</script>
+{% endblock %}

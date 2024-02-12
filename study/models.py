@@ -34,6 +34,8 @@ SYSTEM_CHOICES = (
 class University(models.Model):
     name = models.CharField(max_length=100)
     # location = models.CharField(max_length=100)
+    # established = models.DateField()
+    # university_type = models.CharField(max_length=100, choices=UNIVERSITY_TYPE_CHOICES)
     def __str__(self):
         return f'{self.name}'
 
@@ -48,6 +50,8 @@ class Department(models.Model):
     university = models.ForeignKey(University, on_delete=models.CASCADE)
     faculty = models.ForeignKey(Faculty, on_delete=models.CASCADE, default=1)
     system = models.CharField(max_length=100, choices=SYSTEM_CHOICES, default='semester')
+    established = models.DateField(blank = True, null = True)
+    num_of_seat = models.PositiveIntegerField(default=0)
     ambassadors = models.ManyToManyField(settings.AUTH_USER_MODEL, blank=True)
     def __str__(self):
         return f'{self.name}'
@@ -79,8 +83,8 @@ class Course(models.Model):
 class Question(models.Model):
     university = models.ForeignKey(University, on_delete=models.CASCADE)
     department = models.ForeignKey(Department, on_delete=models.CASCADE)
-    year = models.CharField(max_length=5, choices=YEAR_CHOICES)
-    semester = models.CharField(max_length=5, choices=SEMESTER_CHOICES)
+    year = models.CharField(max_length=5, choices=YEAR_CHOICES, blank=True, null=True)
+    semester = models.CharField(max_length=5, choices=SEMESTER_CHOICES, blank=True, null=True)
     course = models.ForeignKey(Course, on_delete=models.CASCADE)
     exam_name = models.CharField(max_length=50, choices=EXAM_CHOICES)
     session = models.CharField(max_length=9, choices=SESSION_CHOICES)

@@ -53,5 +53,5 @@ def home(request):
         }
 
     # print(profile_object)
-    return render(request, 'home.html', {'context': context})
+    return render(request, 'home.html', {'context': context, 'is_home_page': True})
 

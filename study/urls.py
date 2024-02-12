@@ -21,6 +21,12 @@ urlpatterns = [
     
     path('my_department_s/<int:university_id>/<int:department_id>/', views.my_department_s, name='my_department_s'),
     
+    path('my_university/<int:university_id>/', views.my_university, name='my_university'),
+    
+    path('update_department_order/', views.update_department_order, name='update_department_order'),
+    
+    path('scrape/', views.scrape_data, name='scrape_data'),
+    
     path('pin_year_and_semester/<int:year>/<int:semester>/', views.pin_year_and_semester, name='pin_year_and_semester'),
 
     path('switch_department/', views.switch_department, name='switch_department'),
@@ -63,7 +69,9 @@ urlpatterns = [
     path('view_feedback/', views.view_feedback, name='view_feedback'),
     
     
-    path('handle_love_click/<int:question_id>/', views.handle_love_click, name='handle_love_click'),
+    # path('handle_love_click/<int:question_id>/', views.handle_love_click, name='handle_love_click'),
+    
+    # path('update_love_count/', views.increment_love_count, name='increment_love_count'),
     
     path('share/<int:question_id>/', views.share_question, name='share_question'),
 
