@@ -38,17 +38,17 @@
 #     formatted_time_latest_question = format_upload_time(upload_time_latest_question)
 
 #     latest_book = BookModel.objects.last()
-#     uploader_latest_book = latest_book.uploaded_by.profile.nickname
+#     uploader_latest_book = latest_book.uploaded_by.nickname
 #     upload_time_latest_book = latest_book.upload_time
 #     formatted_time_latest_book = format_upload_time(upload_time_latest_book)
     
 #     latest_note = NoteModel.objects.last()
-#     uploader_latest_note = latest_note.uploaded_by.profile.nickname
+#     uploader_latest_note = latest_note.uploaded_by.nickname
 #     upload_time_latest_note = latest_note.upload_time
 #     formatted_time_latest_note = format_upload_time(upload_time_latest_note)
     
 #     latest_lecture = LectureModel.objects.last()
-#     uploader_latest_lecture = latest_lecture.uploaded_by.profile.nickname
+#     uploader_latest_lecture = latest_lecture.uploaded_by.nickname
 #     upload_time_latest_lecture = latest_lecture.upload_time
 #     formatted_time_latest_lecture = format_upload_time(upload_time_latest_lecture)
         

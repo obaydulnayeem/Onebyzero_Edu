@@ -78,6 +78,7 @@
                                 {% endif %}
                             {% endif %}
 
+                                    {% if user.profile.university %}
                                     <li class="nav-item">
                                         <a class="nav-link active {% if 'my_university/' in request.path %}active-page{% endif %}" href="{% url 'my_university' user.profile.university.id %}">My University</a>
                                     </li>
@@ -85,13 +86,33 @@
                                     <li class="nav-item">
                                         <a class="nav-link active {% if 'others_university/' in request.path %}active-page{% endif %}" href="#">Others University</a>
                                     </li>
+                                    {% endif %}
+                        {% endif %}
+                        
+                        {% if user.is_authenticated and user.profile.university and user.profile.department %}
+                                <li class="nav-item">
+                                    <a class="nav-link active {% if 'leaderboard/' in request.path %}active-page{% endif %}" href="{% url 'leaderboard' %}">Leaderboard</a>
+                                </li>
                         {% endif %}
 
+                        {% if user.is_authenticated %}
+                            <li class="nav-item dropdown">
+                                <a class="nav-link active dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    Contribute
+                                </a>
+                                <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                    <li><a class="dropdown-item" href="{% url 'add_question' %}">Question</a></li>
+                                    <li><a class="dropdown-item" href="{% url 'add_book' %}">Book</a></li>
+                                    {% comment %} <li><hr class="dropdown-divider"></li> {% endcomment %}
+                                    <li><a class="dropdown-item" href="{% url 'add_lecture' %}">Lecture Slide</a></li>
+                                    <li><a class="dropdown-item" href="{% url 'add_note' %}">Note</a></li>
+                                    {% comment %} <li><a class a class="dropdown-item" href="#">Another</a></li> {% endcomment %}
+                                </ul>
+                            </li>
+                        {% endif %}
 
                         {% if user.is_authenticated %}
-                            <li class="nav-item">
-                                <a class="nav-link active {% if 'leaderboard/' in request.path %}active-page{% endif %}" href="{% url 'leaderboard' %}">Leaderboard</a>
-                            </li>
+                            
                             
                             <li class="nav-item dropdown">
                                 <div class="dropdown">

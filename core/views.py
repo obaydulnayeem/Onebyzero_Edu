@@ -15,8 +15,6 @@ def home(request):
     total_courses = Course.objects.count()
     total_students = User.objects.count()
     
-    
-    
     user = request.user
     university = Profile.university
     department = Profile.department

@@ -31,6 +31,7 @@
             <th style="text-align: center;">Total Courses</th>
             <th style="text-align: center;">Total Credits</th>
             <th style="text-align: center;">Total Hours</th>
+            <th style="text-align: center;">Total Resources</th>
           </tr>
         </thead>
 
@@ -40,6 +41,7 @@
               <td align="center">{{courses_sem1}}</td>
               <td align="center">{{credits_sem1|floatformat:"2"}}</td>
               <td align="center">{{hours_sem1}}</td>
+              <td align="center">{{total_resources_sem1}}</td>
             </tr>
 
             <tr>
@@ -47,6 +49,7 @@
               <td align="center">{{courses_sem2}}</td>
               <td align="center">{{credits_sem2|floatformat:"2"}}</td>
               <td align="center">{{hours_sem2}}</td>
+              <td align="center">{{total_resources_sem2}}</td>
             </tr>
 
             <tr>
@@ -54,6 +57,7 @@
               <td align="center">{{courses_sem3}}</td>
               <td align="center">{{credits_sem3|floatformat:"2"}}</td>
               <td align="center">{{hours_sem3}}</td>
+              <td align="center">{{total_resources_sem3}}</td>
             </tr>
 
             <tr>
@@ -61,6 +65,7 @@
               <td align="center">{{courses_sem4}}</td>
               <td align="center">{{credits_sem4|floatformat:"2"}}</td>
               <td align="center">{{hours_sem4}}</td>
+              <td align="center">{{total_resources_sem4}}</td>
             </tr>
 
             <tr>
@@ -68,6 +73,7 @@
               <td align="center">{{courses_sem5}}</td>
               <td align="center">{{credits_sem5|floatformat:"2"}}</td>
               <td align="center">{{hours_sem5}}</td>
+              <td align="center">{{total_resources_sem5}}</td>
             </tr>
 
             <tr>
@@ -75,6 +81,7 @@
               <td align="center">{{courses_sem6}}</td>
               <td align="center">{{credits_sem6|floatformat:"2"}}</td>
               <td align="center">{{hours_sem6}}</td>
+              <td align="center">{{total_resources_sem6}}</td>
             </tr>
 
             <tr>
@@ -82,6 +89,7 @@
               <td align="center">{{courses_sem7}}</td>
               <td align="center">{{credits_sem7|floatformat:"2"}}</td>
               <td align="center">{{hours_sem7}}</td>
+              <td align="center">{{total_resources_sem7}}</td>
             </tr>
 
             <tr>
@@ -89,6 +97,7 @@
               <td align="center">{{courses_sem8}}</td>
               <td align="center">{{credits_sem8|floatformat:"2"}}</td>
               <td align="center">{{hours_sem8}}</td>
+              <td align="center">{{total_resources_sem8}}</td>
             </tr>
 
 
@@ -97,6 +106,7 @@
               <td align="center"><strong>{{total_courses_s}}</strong></td>
               <td align="center"><strong>{{total_credits_s|floatformat:"2"}}</strong></td>
               <td align="center"><strong>{{total_hours_s}}</strong></td>
+              <td align="center"><strong>{{total_resources_all_sem}}</strong></td>
             </tr>
         </tbody>
       </table>
@@ -114,6 +124,7 @@
                   <th scope="col" style="text-align: center;">Total Courses</th>
                   <th scope="col" style="text-align: center;">Total Credits</th>
                   <th scope="col" style="text-align: center;">Total Hours</th>
+                  <th scope="col" style="text-align: center;">Total Resources</th>
                 </tr>
               </thead>
               <tbody>
@@ -121,6 +132,8 @@
                   <td scope="row" align="center">{{courses_sem1}}</td>
                   <td align="center">{{credits_sem1}}</td>
                   <td align="center">{{hours_sem1}}</td>
+                  <td align="center">{{total_resources_sem1}}</td>
+                  <td align="center">*</td>
                 </tr>
               </tbody>
             </table>
@@ -133,6 +146,7 @@
                 <tr>
                   <th scope="col" style="text-align: center;">#</th>
                   <th scope="col" style="text-align: center;">Course Title</th>
+                  <th scope="col" style="text-align: center;">Total Resources</th>
                   <th scope="col" style="text-align: center;">Course Code</th>
                   <th scope="col" style="text-align: center;">Credit</th>
                   <th scope="col" style="text-align: center;">Hour</th>
@@ -144,6 +158,7 @@
                     <tr>
                       <th scope="row" align="center">{{forloop.counter}}</th>
                       <td><a href="{% url 'view_course' c.id %}">{{c}}</a></td>
+                      <td align="center">*</td>
                       <td align="center">{{c.code}}</td>
                       <td align="center">{{c.credit}}</td>
                       <td align="center">{{c.hour}}</td>
@@ -168,6 +183,7 @@
                   <th scope="col" style="text-align: center;">Total Courses</th>
                   <th scope="col" style="text-align: center;">Total Credits</th>
                   <th scope="col" style="text-align: center;">Total Hours</th>
+                  <th scope="col" style="text-align: center;">Total Resources</th>
                 </tr>
               </thead>
               <tbody>
@@ -175,6 +191,7 @@
                   <td scope="row" align="center">{{courses_sem2}}</td>
                   <td align="center">{{credits_sem2}}</td>
                   <td align="center">{{hours_sem2}}</td>
+                  <td align="center">*</td>
                 </tr>
               </tbody>
             </table>
@@ -187,6 +204,7 @@
                 <tr>
                   <th scope="col" style="text-align: center;">#</th>
                   <th scope="col" style="text-align: center;">Course Title</th>
+                  <th scope="col" style="text-align: center;">Total Resources</th>
                   <th scope="col" style="text-align: center;">Course Code</th>
                   <th scope="col" style="text-align: center;">Credit</th>
                   <th scope="col" style="text-align: center;">Hour</th>
@@ -198,6 +216,7 @@
                     <tr>
                       <th scope="row" align="center">{{forloop.counter}}</th>
                       <td><a href="{% url 'view_course' c.id %}">{{c}}</a></td>
+                      <td align="center">*</td>
                       <td align="center">{{c.code}}</td>
                       <td align="center">{{c.credit}}</td>
                       <td align="center">{{c.hour}}</td>
@@ -222,6 +241,7 @@
                   <th scope="col" style="text-align: center;">Total Courses</th>
                   <th scope="col" style="text-align: center;">Total Credits</th>
                   <th scope="col" style="text-align: center;">Total Hours</th>
+                  <th scope="col" style="text-align: center;">Total Resources</th>
                 </tr>
               </thead>
               <tbody>
@@ -229,6 +249,7 @@
                   <td scope="row" align="center">{{courses_sem3}}</td>
                   <td align="center">{{credits_sem3}}</td>
                   <td align="center">{{hours_sem3}}</td>
+                  <td align="center">*</td>
                 </tr>
               </tbody>
             </table>
@@ -241,6 +262,7 @@
                 <tr>
                   <th scope="col" style="text-align: center;">#</th>
                   <th scope="col" style="text-align: center;">Course Title</th>
+                  <th scope="col" style="text-align: center;">Total Resources</th>
                   <th scope="col" style="text-align: center;">Course Code</th>
                   <th scope="col" style="text-align: center;">Credit</th>
                   <th scope="col" style="text-align: center;">Hour</th>
@@ -252,6 +274,7 @@
                     <tr>
                       <th scope="row" align="center">{{forloop.counter}}</th>
                       <td><a href="{% url 'view_course' c.id %}">{{c}}</a></td>
+                      <td align="center">*</td>
                       <td align="center">{{c.code}}</td>
                       <td align="center">{{c.credit}}</td>
                       <td align="center">{{c.hour}}</td>
@@ -277,6 +300,7 @@
                   <th scope="col" style="text-align: center;">Total Courses</th>
                   <th scope="col" style="text-align: center;">Total Credits</th>
                   <th scope="col" style="text-align: center;">Total Hours</th>
+                  <th scope="col" style="text-align: center;">Total Resources</th>
                 </tr>
               </thead>
               <tbody>
@@ -284,6 +308,7 @@
                   <td scope="row" align="center">{{courses_sem4}}</td>
                   <td align="center">{{credits_sem4}}</td>
                   <td align="center">{{hours_sem4}}</td>
+                  <td align="center">*</td>
                 </tr>
               </tbody>
             </table>
@@ -296,6 +321,7 @@
                 <tr>
                   <th scope="col" style="text-align: center;">#</th>
                   <th scope="col" style="text-align: center;">Course Title</th>
+                  <th scope="col" style="text-align: center;">Total Resources</th>
                   <th scope="col" style="text-align: center;">Course Code</th>
                   <th scope="col" style="text-align: center;">Credit</th>
                   <th scope="col" style="text-align: center;">Hour</th>
@@ -307,6 +333,7 @@
                     <tr>
                       <th scope="row" align="center">{{forloop.counter}}</th>
                       <td><a href="{% url 'view_course' c.id %}">{{c}}</a></td>
+                      <td>*</td>
                       <td align="center">{{c.code}}</td>
                       <td align="center">{{c.credit}}</td>
                       <td align="center">{{c.hour}}</td>
@@ -331,6 +358,7 @@
                   <th scope="col" style="text-align: center;">Total Courses</th>
                   <th scope="col" style="text-align: center;">Total Credits</th>
                   <th scope="col" style="text-align: center;">Total Hours</th>
+                  <th scope="col" style="text-align: center;">Total Resources</th>
                 </tr>
               </thead>
               <tbody>
@@ -338,6 +366,7 @@
                   <td scope="row" align="center">{{courses_sem5}}</td>
                   <td align="center">{{credits_sem5}}</td>
                   <td align="center">{{hours_sem5}}</td>
+                  <td align="center">*</td>
                 </tr>
               </tbody>
             </table>
@@ -350,6 +379,7 @@
                 <tr>
                   <th scope="col" style="text-align: center;">#</th>
                   <th scope="col" style="text-align: center;">Course Title</th>
+                  <th scope="col" style="text-align: center;">Total Resources</th>
                   <th scope="col" style="text-align: center;">Course Code</th>
                   <th scope="col" style="text-align: center;">Credit</th>
                   <th scope="col" style="text-align: center;">Hour</th>
@@ -361,6 +391,7 @@
                     <tr>
                       <th scope="row" align="center">{{forloop.counter}}</th>
                       <td><a href="{% url 'view_course' c.id %}">{{c}}</a></td>
+                      <td align="center">*</td>
                       <td align="center">{{c.code}}</td>
                       <td align="center">{{c.credit}}</td>
                       <td align="center">{{c.hour}}</td>
@@ -385,6 +416,7 @@
                   <th scope="col" style="text-align: center;">Total Courses</th>
                   <th scope="col" style="text-align: center;">Total Credits</th>
                   <th scope="col" style="text-align: center;">Total Hours</th>
+                  <th scope="col" style="text-align: center;">Total Resources</th>
                 </tr>
               </thead>
               <tbody>
@@ -392,6 +424,7 @@
                   <td scope="row" align="center">{{courses_sem6}}</td>
                   <td align="center">{{credits_sem6}}</td>
                   <td align="center">{{hours_sem6}}</td>
+                  <td align="center">*</td>
                 </tr>
               </tbody>
             </table>
@@ -404,6 +437,7 @@
                 <tr>
                   <th scope="col" style="text-align: center;">#</th>
                   <th scope="col" style="text-align: center;">Course Title</th>
+                  <th scope="col" style="text-align: center;">Total Resources</th>
                   <th scope="col" style="text-align: center;">Course Code</th>
                   <th scope="col" style="text-align: center;">Credit</th>
                   <th scope="col" style="text-align: center;">Hour</th>
@@ -415,6 +449,7 @@
                     <tr>
                       <th scope="row" align="center">{{forloop.counter}}</th>
                       <td><a href="{% url 'view_course' c.id %}">{{c}}</a></td>
+                      <td align="center">*</td>
                       <td align="center">{{c.code}}</td>
                       <td align="center">{{c.credit}}</td>
                       <td align="center">{{c.hour}}</td>
@@ -439,6 +474,7 @@
                   <th scope="col" style="text-align: center;">Total Courses</th>
                   <th scope="col" style="text-align: center;">Total Credits</th>
                   <th scope="col" style="text-align: center;">Total Hours</th>
+                  <th scope="col" style="text-align: center;">Total Resources</th>
                 </tr>
               </thead>
               <tbody>
@@ -446,6 +482,7 @@
                   <td scope="row" align="center">{{courses_sem7}}</td>
                   <td align="center">{{credits_sem7}}</td>
                   <td align="center">{{hours_sem7}}</td>
+                  <td align="center">*</td>
                 </tr>
               </tbody>
             </table>
@@ -458,6 +495,7 @@
                 <tr>
                   <th scope="col" style="text-align: center;">#</th>
                   <th scope="col" style="text-align: center;">Course Title</th>
+                  <th scope="col" style="text-align: center;">Total Resources</th>
                   <th scope="col" style="text-align: center;">Course Code</th>
                   <th scope="col" style="text-align: center;">Credit</th>
                   <th scope="col" style="text-align: center;">Hour</th>
@@ -469,6 +507,7 @@
                     <tr>
                       <th scope="row" align="center">{{forloop.counter}}</th>
                       <td><a href="{% url 'view_course' c.id %}">{{c}}</a></td>
+                      <td align="center">*</td>
                       <td align="center">{{c.code}}</td>
                       <td align="center">{{c.credit}}</td>
                       <td align="center">{{c.hour}}</td>
@@ -495,6 +534,7 @@
                   <th scope="col" style="text-align: center;">Total Courses</th>
                   <th scope="col" style="text-align: center;">Total Credits</th>
                   <th scope="col" style="text-align: center;">Total Hours</th>
+                  <th scope="col" style="text-align: center;">Total Resources</th>
                 </tr>
               </thead>
               <tbody>
@@ -502,6 +542,7 @@
                   <td scope="row" align="center">{{courses_sem8}}</td>
                   <td align="center">{{credits_sem8}}</td>
                   <td align="center">{{hours_sem8}}</td>
+                  <td align="center">*</td>
                 </tr>
               </tbody>
             </table>
@@ -514,6 +555,7 @@
                 <tr>
                   <th scope="col" style="text-align: center;">#</th>
                   <th scope="col" style="text-align: center;">Course Title</th>
+                  <th scope="col" style="text-align: center;">Total Resources</th>
                   <th scope="col" style="text-align: center;">Course Code</th>
                   <th scope="col" style="text-align: center;">Credit</th>
                   <th scope="col" style="text-align: center;">Hour</th>
@@ -525,6 +567,7 @@
                     <tr>
                       <th scope="row" align="center">{{forloop.counter}}</th>
                       <td><a href="{% url 'view_course' c.id %}">{{c}}</a></td>
+                      <td align="center">*</td>
                       <td align="center">{{c.code}}</td>
                       <td align="center">{{c.credit}}</td>
                       <td align="center">{{c.hour}}</td>

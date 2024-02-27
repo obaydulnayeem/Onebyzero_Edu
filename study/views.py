@@ -219,13 +219,17 @@ def add_question(request):
     if request.method == 'POST':
         form = QuestionForm(request.POST, request.FILES)
         uploader = request.user.profile.nickname
-        
+        print('kkkkkk',uploader)
+        # print(uploader, 'uploader')
         if form.is_valid():
             question = form.save(commit=False) # Create the question object but don't save it yet
             question.uploaded_by = request.user.profile  # Set the uploaded_by field to the currently logged-in user
             question.save()  # Save the question with the uploaded_by information
+            print('dfdsfdsfs', question)
             messages.success(request, "Dear " + str(uploader) + ", Thank you for uploading the question! Your contribution will undoubtedly benefit the students for years of years. Keep up the great work with your contributions!")
             return redirect('view_questions', course_id=question.course.id)
+        else:
+            print(form.errors)
     else:
         form = QuestionForm()
     return render(request, 'resources/questions/add_question.html', {'form': form})
@@ -256,6 +260,8 @@ def view_questions(request, course_id):
     course = get_object_or_404(Course, pk=course_id)
     questions = Question.objects.filter(course=course).order_by('-upload_time')
     
+    total_questions = Question.objects.filter(course=course).count()
+    
     session_filter = request.GET.get('session')
     exam_name_filter = request.GET.get('exam_name')
 
@@ -264,15 +270,6 @@ def view_questions(request, course_id):
 
     if exam_name_filter:
         questions = questions.filter(exam_name__icontains=exam_name_filter)
-        
-    
-#     users_with_question_count = (
-#     Question.objects
-#     .filter(course=course)
-#     .values('uploaded_by', 'uploaded_by__profile__fullname', 'uploaded_by__profile__nickname', 'uploaded_by__profile__profile_image')
-#     .annotate(question_count=Count('uploaded_by__username'))
-# )
-
 
     users_with_question_count = (
     Question.objects
@@ -280,25 +277,16 @@ def view_questions(request, course_id):
     .values('uploaded_by', 'uploaded_by__fullname', 'uploaded_by__nickname', 'uploaded_by__profile_image')
     .annotate(question_count=Count('uploaded_by__fullname'))
 )
-    # print(users_with_question_count)
-
-    # user_id = 6
-    # user_id = 
-    # user_profile_for_image = Profile.objects.get(user_id=users_with_question_count[0]['uploaded_by'])
+    
     user_profile = Profile.objects.get(user=request.user)
-    # user_department_id = user_profile.department.id
     
     context = {
         'questions': questions,
         'course': course,
-        # 'all_uploaders': all_uploaders,
-        # 'question_count': question_count
         'users_with_question_count': users_with_question_count,
-        # 'user_department_id': user_department_id,
         'user_profile': user_profile,
-        # 'user_profile_for_image': user_profile_for_image,
+        'total_questions': total_questions,
     }
-    # print(context)
     return render(request, 'resources/questions/view_questions.html', context)
 
 def share_question(request, question_id):
@@ -361,7 +349,8 @@ def add_book(request):
         form = BookForm(request.POST, request.FILES)
         if form.is_valid():
             book = form.save(commit=False) # Create the question object but don't save it yet
-            book.uploaded_by = request.user  # Set the uploaded_by field to the currently logged-in user
+            book.uploaded_by = request.user.profile
+            # Set the uploaded_by field to the currently logged-in user
             book.save()  # Save the question with the uploaded_by information
             messages.success(request, "Dear " + str(uploader) + ", Thank you for uploading the book! Your contribution will undoubtedly benefit the students for years of years. Keep up the great work with your contributions!")
             return redirect('view_books', course_id=book.course.id)
@@ -369,34 +358,62 @@ def add_book(request):
         form = BookForm()
     return render(request, 'resources/books/add_book.html', {'form': form})
 
-@user_passes_test(is_verified, login_url='/study/error/department/access-denied/')
+# @user_passes_test(is_verified, login_url='/study/error/department/access-denied/')
+# def view_books(request, course_id):
+#     course = get_object_or_404(Course, pk=course_id)
+#     books = BookModel.objects.filter(course=course).order_by('-upload_time')
+    
+#     # session_filter = request.GET.get('session')
+#     # exam_name_filter = request.GET.get('exam_name')
+
+#     # if session_filter:
+#         # notes = notes.filter(session=session_filter)
+        
+#     all_uploaders = BookModel.objects.filter(course=course_id).values_list('uploaded_by__username', flat=True).distinct()
+    
+#     users_with_book_count = (
+#         BookModel.objects
+#         .filter(course=course)
+#         .values('uploaded_by__username')
+#         .annotate(book_count=Count('uploaded_by__username'))
+#     )
+
+#     context = {
+#         'books': books,
+#         'course': course,
+#         'all_uploaders': all_uploaders,
+#         # 'question_count': question_count
+#         'users_with_note_count': users_with_book_count
+#     }
+
+#     return render(request, 'resources/books/view_books.html', context)
+
+
 def view_books(request, course_id):
     course = get_object_or_404(Course, pk=course_id)
     books = BookModel.objects.filter(course=course).order_by('-upload_time')
     
-    # session_filter = request.GET.get('session')
-    # exam_name_filter = request.GET.get('exam_name')
+    session_filter = request.GET.get('session')
 
-    # if session_filter:
-        # notes = notes.filter(session=session_filter)
-        
-    all_uploaders = BookModel.objects.filter(course=course_id).values_list('uploaded_by__username', flat=True).distinct()
-    
+    if session_filter:
+        questions = questions.filter(session=session_filter)
+
+
     users_with_book_count = (
-        BookModel.objects
-        .filter(course=course)
-        .values('uploaded_by__username')
-        .annotate(book_count=Count('uploaded_by__username'))
-    )
-
+    BookModel.objects
+    .filter(course=course)
+    .values('uploaded_by', 'uploaded_by__fullname', 'uploaded_by__nickname', 'uploaded_by__profile_image')
+    .annotate(book_count=Count('uploaded_by__fullname'))
+)
+    
+    user_profile = Profile.objects.get(user=request.user)
+    
     context = {
         'books': books,
         'course': course,
-        'all_uploaders': all_uploaders,
-        # 'question_count': question_count
-        'users_with_note_count': users_with_book_count
+        'users_with_book_count': users_with_book_count,
+        'user_profile': user_profile,
     }
-
     return render(request, 'resources/books/view_books.html', context)
 
 

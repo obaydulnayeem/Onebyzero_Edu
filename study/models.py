@@ -76,6 +76,7 @@ class Course(models.Model):
     year = models.CharField(max_length=5, choices=YEAR_CHOICES, blank=True, null=True)
     semester = models.CharField(max_length=5, choices=SEMESTER_CHOICES, blank=True, null=True)
     syllabus = models.TextField(blank=True, null=True)
+    # total_resources = models.PositiveIntegerField(default=0)
 
     def __str__(self):
         return f'{self.title}'
