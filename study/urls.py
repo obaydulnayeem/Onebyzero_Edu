@@ -34,6 +34,8 @@ urlpatterns = [
     path('view_course/<int:course_id>/', views.view_course, name='view_course'),
     
     path('my_resources/<int:department_id>/<int:year>/<int:semester>/', views.my_resources, name='my_resources'),
+    
+    path('my_resources_s/<int:department_id>/<int:semester>/', views.my_resources_s, name='my_resources_s'),
 
     path('my_resources_selection/', views.my_resources_selection, name='my_resources_selection'),
 
@@ -48,7 +50,7 @@ urlpatterns = [
 
     # NOTES-------------------------------------
     path('add_note/', views.add_note, name='add_note'),
-
+    
     path('view_notes/<int:course_id>/', views.view_notes, name='view_notes'),
 
     # BOOKS-------------------------------------

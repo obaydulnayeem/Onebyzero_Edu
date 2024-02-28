@@ -137,7 +137,7 @@ class BookModel(models.Model):
     feedback = models.TextField(blank=True, null=True)
     
     def __str__(self):
-        return self.book_title    
+        return self.book_title
 
 
 class LectureModel(models.Model):

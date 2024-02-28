@@ -12,6 +12,7 @@ from django.contrib.auth.decorators import user_passes_test, login_required
 from django.http import HttpResponseRedirect
 from django.urls import reverse
 from django.http import HttpResponseRedirect
+from django.utils.safestring import mark_safe
 
 def is_departmental_ambassador(user):
     return user.is_authenticated and user.profile.user_type == 'departmental_ambassador'
@@ -195,6 +196,37 @@ def my_resources(request, department_id, year, semester):
     return render(request, 'my_resources.html', context)
 
 
+def my_resources_s(request, department_id, semester):
+    department = get_object_or_404(Department, pk=department_id)
+    courses = Course.objects.filter(department=department, semester=semester)
+    
+    course_data = []
+    
+    for course in courses:
+        question_count = Question.objects.filter(course=course).count()
+        
+        note_count = NoteModel.objects.filter(course=course).count()
+        
+        lecture_count = LectureModel.objects.filter(course=course).count()
+        
+        book_count = BookModel.objects.filter(course=course).count()
+        
+        course_data.append({'course': course, 'question_count': question_count, 'note_count': note_count, 'lecture_count': lecture_count, 'book_count': book_count})
+        
+    context = {
+        'department': department,
+        'semester': semester,
+        'courses': courses,
+        # 'question_count': question_count,
+        'course_data': course_data,
+        'note_count': note_count,
+        'lecture_count': lecture_count,
+        'book_count': book_count,
+    }
+
+    return render(request, 'resources/my_resources_s.html', context)
+
+
 
 
 def my_resources_selection(request):
@@ -218,15 +250,16 @@ def my_resources_selection(request):
 def add_question(request):
     if request.method == 'POST':
         form = QuestionForm(request.POST, request.FILES)
-        uploader = request.user.profile.nickname
-        print('kkkkkk',uploader)
-        # print(uploader, 'uploader')
+        uploader = request.user.profile.fullname or request.user
+        
         if form.is_valid():
             question = form.save(commit=False) # Create the question object but don't save it yet
             question.uploaded_by = request.user.profile  # Set the uploaded_by field to the currently logged-in user
             question.save()  # Save the question with the uploaded_by information
-            print('dfdsfdsfs', question)
-            messages.success(request, "Dear " + str(uploader) + ", Thank you for uploading the question! Your contribution will undoubtedly benefit the students for years of years. Keep up the great work with your contributions!")
+            # print('dfdsfdsfs', question)
+
+            messages.success(request, mark_safe("Dear <strong>" + str(uploader) + "</strong>, Thank you for uploading the question! Your contribution will undoubtedly benefit the students for years of years. Keep up the great work by continuing your contributions!"))
+
             return redirect('view_questions', course_id=question.course.id)
         else:
             print(form.errors)
@@ -259,7 +292,7 @@ def delete_question(request, question_id):
 def view_questions(request, course_id):
     course = get_object_or_404(Course, pk=course_id)
     questions = Question.objects.filter(course=course).order_by('-upload_time')
-    
+        
     total_questions = Question.objects.filter(course=course).count()
     
     session_filter = request.GET.get('session')
@@ -274,9 +307,11 @@ def view_questions(request, course_id):
     users_with_question_count = (
     Question.objects
     .filter(course=course)
-    .values('uploaded_by', 'uploaded_by__fullname', 'uploaded_by__nickname', 'uploaded_by__profile_image')
+    .values('uploaded_by', 'uploaded_by__user', 'uploaded_by__fullname', 'uploaded_by__nickname', 'uploaded_by__profile_image')
     .annotate(question_count=Count('uploaded_by__fullname'))
 )
+
+    
     
     user_profile = Profile.objects.get(user=request.user)
     
@@ -296,48 +331,100 @@ def share_question(request, question_id):
     return render(request, 'resources/questions/share_question.html', {'question': question})
 
 # NOTES=================================================
+# def add_note(request):
+#     if request.method == 'POST':
+#         uploader = request.user.profile.nickname
+#         form = NoteForm(request.POST, request.FILES)
+#         if form.is_valid():
+#             note = form.save(commit=False) # Create the question object but don't save it yet
+#             note.uploaded_by = request.user  # Set the uploaded_by field to the currently logged-in user
+#             note.save()  # Save the question with the uploaded_by information
+#             messages.success(request, "Dear " + str(uploader) + ", Thank you for uploading the note! Your contribution will undoubtedly benefit the students for years of years. Keep up the great work with your contributions!")
+#             return redirect('view_notes', course_id=note.course.id)
+#     else:
+#         form = NoteForm()
+#     return render(request, 'resources/notes/add_note.html', {'form': form})
+
+
+
 def add_note(request):
     if request.method == 'POST':
-        uploader = request.user.profile.nickname
         form = NoteForm(request.POST, request.FILES)
+        uploader = request.user.profile.fullname or request.user
+        
         if form.is_valid():
             note = form.save(commit=False) # Create the question object but don't save it yet
-            note.uploaded_by = request.user  # Set the uploaded_by field to the currently logged-in user
+            note.uploaded_by = request.user.profile  # Set the uploaded_by field to the currently logged-in user
             note.save()  # Save the question with the uploaded_by information
-            messages.success(request, "Dear " + str(uploader) + ", Thank you for uploading the note! Your contribution will undoubtedly benefit the students for years of years. Keep up the great work with your contributions!")
+            # print('dfdsfdsfs', question)
+
+            messages.success(request, mark_safe("Dear <strong>" + str(uploader) + "</strong>, Thank you for uploading the note! Your contribution will undoubtedly benefit the students for years of years. Keep up the great work by continuing your contributions!"))
+
             return redirect('view_notes', course_id=note.course.id)
+        # else:
+            # print(form.errors)
     else:
         form = NoteForm()
     return render(request, 'resources/notes/add_note.html', {'form': form})
 
-@user_passes_test(is_verified, login_url='/study/error/department/access-denied/')
+# @user_passes_test(is_verified, login_url='/study/error/department/access-denied/')
+# def view_notes(request, course_id):
+#     course = get_object_or_404(Course, pk=course_id)
+#     notes = NoteModel.objects.filter(course=course).order_by('-upload_time')
+    
+#     session_filter = request.GET.get('session')
+#     exam_name_filter = request.GET.get('exam_name')
+
+#     if session_filter:
+#         notes = notes.filter(session=session_filter)
+        
+#     all_uploaders = NoteModel.objects.filter(course=course_id).values_list('uploaded_by__username', flat=True).distinct()
+    
+#     users_with_note_count = (
+#         NoteModel.objects
+#         .filter(course=course)
+#         .values('uploaded_by__username')
+#         .annotate(note_count=Count('uploaded_by__username'))
+#     )
+
+#     context = {
+#         'notes': notes,
+#         'course': course,
+#         'all_uploaders': all_uploaders,
+#         # 'question_count': question_count
+#         'users_with_note_count': users_with_note_count
+#     }
+
+#     return render(request, 'resources/notes/view_notes.html', context)
+
+
 def view_notes(request, course_id):
     course = get_object_or_404(Course, pk=course_id)
     notes = NoteModel.objects.filter(course=course).order_by('-upload_time')
+        
+    total_notes = NoteModel.objects.filter(course=course).count()
     
     session_filter = request.GET.get('session')
-    exam_name_filter = request.GET.get('exam_name')
 
     if session_filter:
         notes = notes.filter(session=session_filter)
-        
-    all_uploaders = NoteModel.objects.filter(course=course_id).values_list('uploaded_by__username', flat=True).distinct()
-    
-    users_with_note_count = (
-        NoteModel.objects
-        .filter(course=course)
-        .values('uploaded_by__username')
-        .annotate(note_count=Count('uploaded_by__username'))
-    )
 
+    users_with_note_count = (
+    NoteModel.objects
+    .filter(course=course)
+    .values('uploaded_by', 'uploaded_by__user', 'uploaded_by__fullname', 'uploaded_by__nickname', 'uploaded_by__profile_image')
+    .annotate(note_count=Count('uploaded_by__fullname'))
+)
+
+    user_profile = Profile.objects.get(user=request.user)
+    
     context = {
         'notes': notes,
         'course': course,
-        'all_uploaders': all_uploaders,
-        # 'question_count': question_count
-        'users_with_note_count': users_with_note_count
+        'users_with_note_count': users_with_note_count,
+        'user_profile': user_profile,
+        'total_notes': total_notes,
     }
-
     return render(request, 'resources/notes/view_notes.html', context)
 
 
@@ -345,15 +432,21 @@ def view_notes(request, course_id):
 # BOOKS =================================================
 def add_book(request):
     if request.method == 'POST':
-        uploader = request.user.profile.nickname
+        uploader = request.user.profile.nickname or request.user
+        
         form = BookForm(request.POST, request.FILES)
+        
         if form.is_valid():
             book = form.save(commit=False) # Create the question object but don't save it yet
             book.uploaded_by = request.user.profile
             # Set the uploaded_by field to the currently logged-in user
             book.save()  # Save the question with the uploaded_by information
-            messages.success(request, "Dear " + str(uploader) + ", Thank you for uploading the book! Your contribution will undoubtedly benefit the students for years of years. Keep up the great work with your contributions!")
+            messages.success(request, mark_safe("Dear <strong>" + str(uploader) + "</strong>, Thank you for uploading the book! Your contribution will undoubtedly benefit the students for years of years. Keep up the great work by continuing your contributions!"))
+            
             return redirect('view_books', course_id=book.course.id)
+        else:
+            print(form.errors)
+
     else:
         form = BookForm()
     return render(request, 'resources/books/add_book.html', {'form': form})
@@ -389,22 +482,57 @@ def add_book(request):
 #     return render(request, 'resources/books/view_books.html', context)
 
 
+# def view_books(request, course_id):
+#     course = get_object_or_404(Course, pk=course_id)
+#     books = BookModel.objects.filter(course=course).order_by('-upload_time')
+    
+#     session_filter = request.GET.get('session')
+
+#     if session_filter:
+#         questions = questions.filter(session=session_filter)
+
+
+#     users_with_book_count = (
+#     BookModel.objects
+#     .filter(course=course)
+#     .values('uploaded_by', 'uploaded_by__fullname', 'uploaded_by__nickname', 'uploaded_by__profile_image')
+#     .annotate(book_count=Count('uploaded_by__fullname'))
+# )
+    
+#     user_profile = Profile.objects.get(user=request.user)
+    
+#     context = {
+#         'books': books,
+#         'course': course,
+#         'users_with_book_count': users_with_book_count,
+#         'user_profile': user_profile,
+#     }
+#     return render(request, 'resources/books/view_books.html', context)
+
+
 def view_books(request, course_id):
     course = get_object_or_404(Course, pk=course_id)
     books = BookModel.objects.filter(course=course).order_by('-upload_time')
+        
+    total_books = BookModel.objects.filter(course=course).count()
     
-    session_filter = request.GET.get('session')
+    # session_filter = request.GET.get('session')
+    # exam_name_filter = request.GET.get('exam_name')
 
-    if session_filter:
-        questions = questions.filter(session=session_filter)
+    # if session_filter:
+    #     questions = questions.filter(session=session_filter)
 
+    # if exam_name_filter:
+    #     questions = questions.filter(exam_name__icontains=exam_name_filter)
 
     users_with_book_count = (
     BookModel.objects
     .filter(course=course)
-    .values('uploaded_by', 'uploaded_by__fullname', 'uploaded_by__nickname', 'uploaded_by__profile_image')
+    .values('uploaded_by', 'uploaded_by__user', 'uploaded_by__fullname', 'uploaded_by__nickname', 'uploaded_by__profile_image')
     .annotate(book_count=Count('uploaded_by__fullname'))
 )
+
+    
     
     user_profile = Profile.objects.get(user=request.user)
     
@@ -413,6 +541,7 @@ def view_books(request, course_id):
         'course': course,
         'users_with_book_count': users_with_book_count,
         'user_profile': user_profile,
+        'total_books': total_books,
     }
     return render(request, 'resources/books/view_books.html', context)
 
