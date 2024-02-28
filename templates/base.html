@@ -65,17 +65,17 @@
                                 <a class="nav-link active {% if request.path == '/' %}active-page{% endif %}" href="{% url 'home' %}">Home</a>
                             </li>
 
-                            {% comment %} {% if user.is_authenticated %}
-                                {% if user.profile.department and user.profile.semester and user.profile.year %}
+                            {% if user.is_authenticated %}
+                                {% if user.profile.department and user.profile.semester %}
                                     <li class="nav-item">
-                                        <a class="nav-link active" aria-current="page" href="{% url 'my_resources_s' user.profile.department.id user.profile.year user.profile.semester %}">My Resources</a>
+                                            <a class="nav-link active" aria-current="page" href="{% url 'my_resources_s' user.profile.department.id user.profile.semester %}">My Resources</a>
                                     </li>
                                 {% else %}
                                     <li class="nav-item">
                                         <a class="nav-link active" aria-current="page" href="{% url 'my_resources_selection' %}">My Resources</a>
                                     </li>
                                 {% endif %}
-                            {% endif %} {% endcomment %}
+                            {% endif %} 
 
                             {% if user.profile.university and user.profile.department %}
                                 {% if user.profile.department.system == 'year' %}

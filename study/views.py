@@ -198,9 +198,14 @@ def my_resources(request, department_id, year, semester):
 
 def my_resources_s(request, department_id, semester):
     department = get_object_or_404(Department, pk=department_id)
-    courses = Course.objects.filter(department=department, semester=semester)
+    courses = Course.objects.filter(department=department, semester=1)
     
     course_data = []
+    
+    question_count = 0
+    note_count = 0
+    lecture_count = 0
+    book_count = 0
     
     for course in courses:
         question_count = Question.objects.filter(course=course).count()
@@ -547,47 +552,98 @@ def view_books(request, course_id):
 
 
 # LECTURE SLIDES =================================================
+# def add_lecture(request):
+#     if request.method == 'POST':
+#         uploader = request.user.profile.nickname
+#         form = LectureForm(request.POST, request.FILES)
+#         if form.is_valid():
+#             lecture = form.save(commit=False) # Create the question object but don't save it yet
+#             lecture.uploaded_by = request.user  # Set the uploaded_by field to the currently logged-in user
+#             lecture.save()  # Save the question with the uploaded_by information
+#             messages.success(request, "Dear " + str(uploader) + ", Thank you for uploading the lecture slide! Your contribution will undoubtedly benefit the students for years of years. Keep up the great work with your contributions!")
+#             return redirect('view_lectures', course_id=lecture.course.id)
+#     else:
+#         form = LectureForm()
+#     return render(request, 'resources/lectures/add_lecture.html', {'form': form})
+
+
 def add_lecture(request):
     if request.method == 'POST':
-        uploader = request.user.profile.nickname
         form = LectureForm(request.POST, request.FILES)
+        uploader = request.user.profile.fullname or request.user
+        
         if form.is_valid():
             lecture = form.save(commit=False) # Create the question object but don't save it yet
-            lecture.uploaded_by = request.user  # Set the uploaded_by field to the currently logged-in user
+            lecture.uploaded_by = request.user.profile  # Set the uploaded_by field to the currently logged-in user
             lecture.save()  # Save the question with the uploaded_by information
-            messages.success(request, "Dear " + str(uploader) + ", Thank you for uploading the lecture slide! Your contribution will undoubtedly benefit the students for years of years. Keep up the great work with your contributions!")
+            # print('dfdsfdsfs', question)
+
+            messages.success(request, mark_safe("Dear <strong>" + str(uploader) + "</strong>, Thank you for uploading the lecture slide! Your contribution will undoubtedly benefit the students for years of years. Keep up the great work by continuing your contributions!"))
+
             return redirect('view_lectures', course_id=lecture.course.id)
+        # else:
+            # print(form.errors)
     else:
         form = LectureForm()
     return render(request, 'resources/lectures/add_lecture.html', {'form': form})
 
-@user_passes_test(is_verified, login_url='/study/error/department/access-denied/')
+# @user_passes_test(is_verified, login_url='/study/error/department/access-denied/')
+# def view_lectures(request, course_id):
+#     course = get_object_or_404(Course, pk=course_id)
+#     lectures = LectureModel.objects.filter(course=course).order_by('-upload_time')
+    
+#     # session_filter = request.GET.get('session')
+#     # exam_name_filter = request.GET.get('exam_name')
+
+#     # if session_filter:
+#         # notes = notes.filter(session=session_filter)
+        
+#     all_uploaders = LectureModel.objects.filter(course=course_id).values_list('uploaded_by__username', flat=True).distinct()
+    
+#     users_with_lecture_count = (
+#         LectureModel.objects
+#         .filter(course=course)
+#         .values('uploaded_by__username')
+#         .annotate(lecture_count=Count('uploaded_by__username'))
+#     )
+
+#     context = {
+#         'lectures': lectures,
+#         'course': course,
+#         'all_uploaders': all_uploaders,
+#         'users_with_lecture_count': users_with_lecture_count
+#     }
+
+#     return render(request, 'resources/lectures/view_lectures.html', context)
+
+
 def view_lectures(request, course_id):
     course = get_object_or_404(Course, pk=course_id)
     lectures = LectureModel.objects.filter(course=course).order_by('-upload_time')
-    
-    # session_filter = request.GET.get('session')
-    # exam_name_filter = request.GET.get('exam_name')
-
-    # if session_filter:
-        # notes = notes.filter(session=session_filter)
         
-    all_uploaders = LectureModel.objects.filter(course=course_id).values_list('uploaded_by__username', flat=True).distinct()
+    total_lectures = LectureModel.objects.filter(course=course).count()
     
-    users_with_lecture_count = (
-        LectureModel.objects
-        .filter(course=course)
-        .values('uploaded_by__username')
-        .annotate(lecture_count=Count('uploaded_by__username'))
-    )
+    session_filter = request.GET.get('session')
 
+    if session_filter:
+        lectures = lectures.filter(session=session_filter)
+
+    users_with_lecture_count = (
+    LectureModel.objects
+    .filter(course=course)
+    .values('uploaded_by', 'uploaded_by__user', 'uploaded_by__fullname', 'uploaded_by__nickname', 'uploaded_by__profile_image')
+    .annotate(lecture_count=Count('uploaded_by__fullname'))
+)
+
+    user_profile = Profile.objects.get(user=request.user)
+    
     context = {
         'lectures': lectures,
         'course': course,
-        'all_uploaders': all_uploaders,
-        'users_with_lecture_count': users_with_lecture_count
+        'users_with_lecture_count': users_with_lecture_count,
+        'user_profile': user_profile,
+        'total_lectures': total_lectures,
     }
-
     return render(request, 'resources/lectures/view_lectures.html', context)
 
 

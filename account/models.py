@@ -1,7 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 # from study.models import Department, University
-from study.choices import SESSION_CHOICES, DEPARTMENTAL_BATCHES
+from study.choices import SESSION_CHOICES, DEPARTMENTAL_BATCHES, SEMESTER_CHOICES
 
 class Profile(models.Model):
     USER_TYPE_CHOICES = (
@@ -20,10 +20,10 @@ class Profile(models.Model):
         (4, '4th'),
     )
     
-    SEM_CHOICES = (
-        (1, '1st'),
-        (2, '2nd'),
-    )
+    # SEM_CHOICES = (
+    #     (1, '1st'),
+    #     (2, '2nd'),
+    # )
     
     
     user = models.OneToOneField(User, on_delete=models.CASCADE)
@@ -40,7 +40,8 @@ class Profile(models.Model):
     session = models.CharField(max_length=50, choices=SESSION_CHOICES, blank=True, null=True)
     departmental_batch = models.CharField(max_length=50, choices=DEPARTMENTAL_BATCHES, blank=True, null=True)
     year = models.PositiveIntegerField(blank=True, null=True, choices=YEAR_CHOICES)
-    semester = models.PositiveIntegerField(blank=True, null=True, choices=SEM_CHOICES)
+    # semester = models.CharField(max_length=50, blank=True, null=True, choices=SEMESTER_CHOICES)
+    semester = models.PositiveIntegerField(choices=SEMESTER_CHOICES, blank=True, null=True)
     is_verified = models.BooleanField(default=False)
     
     facebook_id = models.CharField(max_length=100, blank=True)

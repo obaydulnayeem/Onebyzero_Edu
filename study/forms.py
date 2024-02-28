@@ -117,7 +117,7 @@ class BookForm(forms.ModelForm):
 class LectureForm(forms.ModelForm):
     class Meta:
         model = LectureModel
-        fields = ['university', 'department', 'year', 'semester', 'session', 'course', 'lecture_title', 'lecture_author', 'lecture_file']
+        fields = ['university', 'department', 'semester', 'course', 'session',  'lecture_title', 'lecture_author', 'lecture_file']
     
 class MyDepartmentForm(forms.Form):
     university = forms.ModelChoiceField(

@@ -4,7 +4,7 @@
 
 {% load static %}
 
-<div class="container mt-4">
+<div class="container" style="margin-top:-40px; margin-left: 130px;">
 
   {% for message in messages %}
   <div class="alert alert-light alert-dismissible fade show" role="alert" style="background-color: #ffcccc;">
@@ -80,8 +80,8 @@
                                 {% endif %}
                               </p>
                             {% else %}
-                              <p><strong>Year:</strong> N/A</p>
-                              <p><strong>Semester:</strong> N/A</p>
+                              {% comment %} <p><strong>Year:</strong> N/A</p> {% endcomment %}
+                              <p><strong>Semester: </strong>{{ profile.semester }}</p>
                             {% endif %}
 
                             {% if profile.departmental_batch and profile.session %}
