@@ -12,11 +12,12 @@
 
 
   <div class="container mt-4 mb-4">
-      <div class="text-center mt-3">
-        <h2>Department of {{ department.name }}</h2>
-        <p>(Faculty of {{ department.faculty }})</p>
-        <h4>{{ university.name }}</h4>
-      </div>
+    <div class="text-center mb-3 pt-1 pb-1" style="background-color: #4e5052; color: white; margin-top: -70px; margin-left: 140px; width: 70%; text-align: center;">
+      <h4>Department of {{ department.name }}</h4>
+      <hr style="margin-top: -5px">
+      <p style="margin-top: -15px">Faculty of {{ department.faculty.name }}</p>
+      <p style="margin-top: -15px"><strong>{{ department.university.name }}</strong></p>
+     </div>
 
       {% comment %} <div>
         <a href="{% url 'switch_department' %}">Switch Department</a>

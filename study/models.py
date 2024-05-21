@@ -7,6 +7,9 @@ from django.contrib.auth import get_user_model
 from django.core.validators import FileExtensionValidator
 from account.models import Profile
 from django.conf import settings
+# from third_party_app.db_connection import db
+
+# study_collection = db['study']
 
 SYSTEM_CHOICES = (
     ('year', 'Year'),

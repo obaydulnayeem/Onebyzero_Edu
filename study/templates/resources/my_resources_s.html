@@ -4,11 +4,29 @@
 
 {% block content %}
     <div class="container mt-3">
-        <h4 class="text-center">Department of {{ department.name }}, {{ department.university.name }}</h4>
-        <h6 class="text-center">
-            {% if year == 1 %}1st Year, {% elif year == 2 %}2nd Year, {% endif %}
-            {% if semester == 1 %}1st Semester{% elif semester == 2 %}2nd Semester{% endif %}
-        </h6>
+        <div class="text-center mb-3 pt-1 pb-1" style="background-color: #4e5052; color: white; margin-top: -70px; margin-left: 140px; width: 70%; text-align: center;">
+            {% if semester == 1 %}
+                <h4>1st Semester</h4>
+            {% elif semester == 2 %}
+                <h4>2nd Semester</h4>
+            {% elif semester == 3 %}
+                <h4>3rd Semester</h4>
+            {% elif semester == 4 %}
+                <h4>4th Semester</h4>
+            {% elif semester == 5 %}
+                <h4>5th Semester</h4>
+            {% elif semester == 6 %}
+                <h4>6th Semester</h4>
+            {% elif semester == 7 %}
+                <h4>7th Semester</h4>
+            {% elif semester == 8 %}
+                <h4>8th Semester</h4>
+            {% endif %}
+            <hr style="margin-top: -5px">
+            <p style="margin-top: -15px"><strong>Department of {{ department.name }}, {{ department.university.name }}</strong></p>
+        </div>
+        
+        
         <div class="row mt-4">
             {% for data in course_data %}
                 <div class="col-md-4 mb-4">

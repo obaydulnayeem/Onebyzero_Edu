@@ -4,15 +4,12 @@
 {% block title %}Course Page{% endblock %}
 
 {% block content %}
-<div>
-    <div class="container text-center mt-3">
-        <h2>{{ course.title }}</h2>
-        <p><b>Course Code: {{ course.code }}</b></p>
-        <h6>Department of {{ department.name }}, {{ university.name }}</h6>
-    </div>
-</div>
 
-<br>
+<div class="text-center mb-3 pt-1 pb-1" style="background-color: #4e5052; color: white; margin-top: -50px; margin-left: 140px; width: 70%; text-align: center;">
+    <h4>{{ course.title }} [{{ course.code }}]</h4>
+    <hr style="margin-top: -5px">
+    <p style="margin-top: -15px"><strong>Department of {{ department.name }}, {{ department.university.name }}</strong></p>
+</div>
 
 <div class="mx-5">
     <p><strong>Syllabus:</strong> {{ course.syllabus }}</p>

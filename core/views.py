@@ -26,7 +26,7 @@ def home(request):
             profile_object = Profile.objects.get(user=request.user)
         except Profile.DoesNotExist:
             # Handle the case where the user's profile does not exist
-            pass
+            profile_object = None
         
     # print('dept:', department , 'year:', year, 'sem:', semester)
     if not user.is_authenticated:
@@ -43,7 +43,7 @@ def home(request):
             'university': university,
             'department_id': department,
             'year_id': year,
-            'semester_id': semester
+            'semester_id': semester,
         }
     
     else:

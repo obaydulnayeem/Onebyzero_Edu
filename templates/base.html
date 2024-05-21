@@ -90,7 +90,7 @@
                                 {% endif %}
                             {% endif %}
 
-                                    {% if user.profile.university %}
+                                    {% comment %} {% if user.profile.university %}
                                     <li class="nav-item">
                                         <a class="nav-link active {% if 'my_university/' in request.path %}active-page{% endif %}" href="{% url 'my_university' user.profile.university.id %}">My University</a>
                                     </li>
@@ -98,7 +98,7 @@
                                     <li class="nav-item">
                                         <a class="nav-link active {% if 'others_university/' in request.path %}active-page{% endif %}" href="#">Others University</a>
                                     </li>
-                                    {% endif %}
+                                    {% endif %} {% endcomment %}
                         {% endif %}
                         
                         {% if user.is_authenticated and user.profile.university and user.profile.department %}

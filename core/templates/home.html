@@ -18,7 +18,8 @@
                 <button type="submit">Search</button>
             </form>
         </div> {% endcomment %}
-
+        
+{% comment %} 
     <div>
         {% if not context.profile_object.user_type and user.is_authenticated %}
             <form method="post" action="{% url 'update_user_type' %}">
@@ -27,7 +28,8 @@
                 <input type="submit" name="user_type" value="Teacher">
             </form>
         {% endif %}
-    </div>
+    </div> 
+{% endcomment %}
 
     <div class="container mt-4">
         <div class="row">
