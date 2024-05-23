@@ -15,9 +15,10 @@ jobs:
       uses: SamKirkland/FTP-Deploy-Action@v4.3.5
       with:
         # server: ftp.samkirkland.com
-        server: www.two.onebyzeroedu.com
-        # username: ${{ secrets.ftp_username }}
-        # password: ${{ secrets.ftp_password }}
-        username: ftb_test1
-        password: '*0HN#@ftb_test1.$'
+        # server: www.two.onebyzeroedu.com
+        server: ${{ secrets.FTP_SERVER }}
+        username: ${{ secrets.FTP_USERNAME }}
+        password: ${{ secrets.FTP_PASSWORD }}
+        # username: ftb_test1
+        # password: '*0HN#@ftb_test1.$'
         server-dir: /deploy/
