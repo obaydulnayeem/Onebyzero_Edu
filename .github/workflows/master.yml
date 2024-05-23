@@ -16,6 +16,8 @@ jobs:
       with:
         # server: ftp.samkirkland.com
         server: www.two.onebyzeroedu.com
-        username: ${{ secrets.ftp_username }}
-        password: ${{ secrets.ftp_password }}
+        # username: ${{ secrets.ftp_username }}
+        # password: ${{ secrets.ftp_password }}
+        username: ftb_test1
+        password: '*0HN#@ftb_test1.$'
         server-dir: /deploy/
