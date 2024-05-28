@@ -13,7 +13,7 @@ jobs:
     - name: 📂 Sync files
       uses: SamKirkland/FTP-Deploy-Action@v4.3.5
       with:
-        server: www.two.onebyzeroedu.com/
+        server: www.onebyzeroedu.com/
         # server: ftp.onebyzeroedu.com
         username: ${{ secrets.ftp_username }}
         password: ${{ secrets.ftp_password }}
