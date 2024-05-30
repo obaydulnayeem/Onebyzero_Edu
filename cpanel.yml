@@ -1,0 +1,4 @@
+deployment: 
+  task: 
+    - export DEPLOYPATH=/home/onebyze1/Onebyzero_Edu
+    -/bin/cp * $DEPLOYPATH
