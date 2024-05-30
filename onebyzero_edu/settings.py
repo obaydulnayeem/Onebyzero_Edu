@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-(^5to%*g5evjrg2@)oykg3irlq7*jmg-ylddl_akg$gqp$!dyp
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['two.onebyzeroedu.com', 'www.two.onebyzeroedu.com']
 
 
 # Application definition
@@ -112,9 +112,9 @@ WSGI_APPLICATION = 'onebyzero_edu.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'onebyzeroedu_test',
-        'USER': 'root',
-        'PASSWORD': '',
+        'NAME': 'onebyze1_test1_database',
+        'USER': 'onebyze1_nayeem1',
+        'PASSWORD': '*0HN#@cpaneluser1.$',
         'HOST': 'localhost',
         'PORT': '3306',
     }
