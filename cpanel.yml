@@ -1,4 +1,4 @@
-deployment: 
-  task: 
+deployment:
+  task:
     - export DEPLOYPATH=/home/onebyze1/public_html/
     -/bin/cp * $DEPLOYPATH
