@@ -112,9 +112,9 @@ WSGI_APPLICATION = 'onebyzero_edu.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'onebyzeroedu_test',
-        'USER': 'root',
-        'PASSWORD': '',
+        'NAME': 'onebyze1_onebyzero_edu_four',
+        'USER': 'onebyze1_nayeem1',
+        'PASSWORD': '*0HN#@nayeem1.$',
         'HOST': 'localhost',
         'PORT': '3306',
     }
